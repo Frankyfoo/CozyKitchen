@@ -42,46 +42,51 @@ class LoginActivity : AppCompatActivity() {
     private fun login() {
         val email = binding.etEmail.text.toString().lowercase().trim()
         val password = binding.etPassword.text.toString().trim()
+        var isNotValid = false
 
         if (email.isEmpty()) {
             binding.etEmail.error = "Email required"
             binding.etEmail.requestFocus()
+            isNotValid = true
         }
 
         if (password.isEmpty()) {
             binding.etPassword.error = "Password required"
             binding.etPassword.requestFocus()
+            isNotValid = true
         }
 
-        KitchenApi.retrofitService.getUsers().enqueue(object: Callback<List<User>?> {
-            override fun onResponse(call: Call<List<User>?>, response: Response<List<User>?>) {
-                val responseBody = response.body()
+        if(!isNotValid) {
+            KitchenApi.retrofitService.getUsers().enqueue(object: Callback<List<User>?> {
+                override fun onResponse(call: Call<List<User>?>, response: Response<List<User>?>) {
+                    val responseBody = response.body()
 
-                if (responseBody != null) {
-                    for (User in responseBody) {
-                        if (User.userEmail == email && User.userPassword == password) {
-                            isLoggedIn = true
-                            Toast.makeText(this@LoginActivity, "Login Successfully", Toast.LENGTH_SHORT).show()
-                            session.createLoginSession(User.userId, User.userEmail, User.userName, User.userPhoneNumber)
-                            var intent = Intent(this@LoginActivity, MainActivity::class.java)
-                            intent.putExtra("userName", User.userName)
-                            intent.putExtra("userEmail", User.userEmail)
-                            startActivity(intent)
-                            finish()
+                    if (responseBody != null) {
+                        for (User in responseBody) {
+                            if (User.userEmail == email && User.userPassword == password) {
+                                isLoggedIn = true
+                                Toast.makeText(this@LoginActivity, "Login Successfully", Toast.LENGTH_SHORT).show()
+                                session.createLoginSession(User.userId, User.userEmail, User.userName, User.userPhoneNumber)
+                                var intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                intent.putExtra("userName", User.userName)
+                                intent.putExtra("userEmail", User.userEmail)
+                                startActivity(intent)
+                                finish()
+                            }
                         }
+                    }
+
+                    if (!isLoggedIn) {
+                        Toast.makeText(this@LoginActivity, "Incorrect Email or Password", Toast.LENGTH_SHORT).show()
                     }
                 }
 
-                if (!isLoggedIn) {
-                    Toast.makeText(this@LoginActivity, "Incorrect Email or Password", Toast.LENGTH_SHORT).show()
+                override fun onFailure(call: Call<List<User>?>, t: Throwable) {
+                    Toast.makeText(this@LoginActivity, "Error", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<List<User>?>, t: Throwable) {
-                Toast.makeText(this@LoginActivity, "Error", Toast.LENGTH_SHORT).show()
-            }
-
-        })
+            })
+        }
     }
 
     private fun toRegisterActivity() {
