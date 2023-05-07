@@ -1,4 +1,4 @@
-package com.example.cozykitchen
+package com.example.cozykitchen.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
