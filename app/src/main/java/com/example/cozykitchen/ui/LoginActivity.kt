@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cozykitchen.api.KitchenApi
 import com.example.cozykitchen.databinding.ActivityLoginBinding
+import com.example.cozykitchen.helper.ValidatorSingleton
 import com.example.cozykitchen.model.User
 import com.example.cozykitchen.sharedPreference.LoginPreference
 import retrofit2.Call
@@ -34,9 +35,18 @@ class LoginActivity : AppCompatActivity() {
             toRegisterActivity()
         }
 
+        binding.tvToChefLogin.setOnClickListener {
+            toChefLoginActivity()
+        }
+
         binding.btnLogin.setOnClickListener {
             login()
         }
+    }
+
+    private fun toChefLoginActivity() {
+        val intent = Intent(this, ChefLoginActivity::class.java)
+        startActivity(intent)
     }
 
     private fun login() {
@@ -48,10 +58,18 @@ class LoginActivity : AppCompatActivity() {
             binding.etEmail.error = "Email required"
             binding.etEmail.requestFocus()
             isNotValid = true
+        } else if (!ValidatorSingleton.isValidEmail(email)) {
+            binding.etEmail.error = "Incorrect Email Address"
+            binding.etEmail.requestFocus()
+            isNotValid = true
         }
 
         if (password.isEmpty()) {
             binding.etPassword.error = "Password required"
+            binding.etPassword.requestFocus()
+            isNotValid = true
+        } else if (!ValidatorSingleton.isValidPasswordLength(password)){
+            binding.etPassword.error = "Minimal 8 character needed"
             binding.etPassword.requestFocus()
             isNotValid = true
         }

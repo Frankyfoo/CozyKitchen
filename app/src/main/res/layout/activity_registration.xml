@@ -79,7 +79,7 @@
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New User?"
+        android:text="Old/Existing User?"
         android:textSize="18sp"
         android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
