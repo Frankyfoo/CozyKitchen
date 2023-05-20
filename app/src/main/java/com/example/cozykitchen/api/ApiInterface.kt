@@ -1,5 +1,6 @@
 package com.example.cozykitchen.api
 
+import com.example.cozykitchen.model.Shop
 import com.example.cozykitchen.model.User
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -21,6 +22,9 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("api/user")
     fun createUser(@Body requestBody: RequestBody): Call<User>
+
+    @GET("api/shop")
+    fun getShops(): Call<List<Shop>>
 
 }
 

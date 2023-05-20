@@ -3,7 +3,9 @@ package com.example.cozykitchen.sharedPreference
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import com.example.cozykitchen.model.User
 import com.example.cozykitchen.ui.LoginActivity
+import com.google.gson.Gson
 
 class LoginPreference {
     lateinit var pref:SharedPreferences
@@ -56,6 +58,17 @@ class LoginPreference {
 
         return user
     }
+
+    // this function is to return an User object type who has logged in (still incomplete)
+//    fun convertToUserObject(): User {
+//        val hashMap = getUserDetails()
+//
+//        val gson = Gson()
+//        val jsonString = gson.toJson(hashMap)
+//
+//        // Convert the JSON string back to an object
+//        return gson.fromJson(jsonString, User::class.java)
+//    }
 
     fun LogoutUser() {
         editor.clear()

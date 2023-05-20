@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CozyKitchen</string>
+    <string name="hello_shop_fragment">Hello Shop fragment</string>
 </resources>

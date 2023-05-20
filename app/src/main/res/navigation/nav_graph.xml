@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/shop_fragment">
+
+    <fragment
+        android:id="@+id/shop_fragment"
+        android:name="com.example.cozykitchen.ui.fragment.ShopFragment"
+        android:label="Shop"
+        tools:layout="@layout/fragment_shop" >
+        <action
+            android:id="@+id/action_shop_fragment_to_cart_fragment"
+            app:destination="@id/cart_fragment" />
+        <argument
+            android:name="CustomerId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cart_fragment"
+        android:name="com.example.cozykitchen.ui.fragment.CartFragment"
+        android:label="Cart"
+        tools:layout="@layout/fragment_cart" />
+
+    <fragment
+        android:id="@+id/history_fragment"
+        android:name="com.example.cozykitchen.ui.fragment.HistoryFragment"
+        android:label="Cart"
+        tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/profile_fragment"
+        android:name="com.example.cozykitchen.ui.fragment.ProfileFragment"
+        android:label="Cart"
+        tools:layout="@layout/fragment_profile" />
+
+
+
+</navigation>
