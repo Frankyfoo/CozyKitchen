@@ -1,22 +1,42 @@
 package com.example.cozykitchen.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cozykitchen.R
 import com.example.cozykitchen.model.Shop
+import com.example.cozykitchen.ui.fragment.OnItemClickListener
+import com.example.cozykitchen.ui.fragment.ShopFragment
 
-class ShopAdapter(private val shops: List<Shop>): RecyclerView.Adapter<ShopAdapter.ShopViewHolder>() {
+class ShopAdapter(private val shops: List<Shop>, private val listener: OnItemClickListener): RecyclerView.Adapter<ShopAdapter.ShopViewHolder>() {
 
     inner class ShopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val shopCard: CardView = itemView.findViewById(R.id.cardShop)
+        private val shopCard: CardView = itemView.findViewById(R.id.cardShop)
         val shopImage: ImageView = itemView.findViewById(R.id.imageShop)
         val shopName: TextView = itemView.findViewById(R.id.tvShopName)
+
+        init {
+            shopCard.setOnClickListener {
+                val position = bindingAdapterPosition
+                Log.d("TestingAdapter", "$position")
+                if (position != RecyclerView.NO_POSITION) {
+                    val shopId = getShopId(position)
+                    listener.onItemClick(shopId)
+                }
+            }
+        }
+
+        private fun getShopId(position: Int): String {
+            return shops[position].shopId
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopViewHolder {
@@ -34,7 +54,7 @@ class ShopAdapter(private val shops: List<Shop>): RecyclerView.Adapter<ShopAdapt
         // Bind data to views
         holder.shopName.text = currentShop.shopName
 
-        // if no imageurl is empty, show no image jpg
+        // if no image url is empty, show no image jpg
         if(currentShop.shopImageUrl.isEmpty()) {
             Glide.with(holder.itemView.context)
                 .load(R.drawable.no_image)

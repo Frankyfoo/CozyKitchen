@@ -10,12 +10,12 @@
         android:name="com.example.cozykitchen.ui.fragment.ShopFragment"
         android:label="Shop"
         tools:layout="@layout/fragment_shop" >
-        <action
-            android:id="@+id/action_shop_fragment_to_cart_fragment"
-            app:destination="@id/cart_fragment" />
         <argument
             android:name="CustomerId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_shop_fragment_to_foodListFragment"
+            app:destination="@id/foodListFragment" />
     </fragment>
 
     <fragment
@@ -35,7 +35,11 @@
         android:name="com.example.cozykitchen.ui.fragment.ProfileFragment"
         android:label="Cart"
         tools:layout="@layout/fragment_profile" />
-
+    <fragment
+        android:id="@+id/foodListFragment"
+        android:name="com.example.cozykitchen.ui.fragment.FoodListFragment"
+        android:label="fragment_food_list"
+        tools:layout="@layout/fragment_food_list" />
 
 
 </navigation>

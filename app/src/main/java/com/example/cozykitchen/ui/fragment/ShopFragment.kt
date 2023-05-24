@@ -1,16 +1,15 @@
 package com.example.cozykitchen.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cozykitchen.R
@@ -25,7 +24,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ShopFragment : Fragment() {
+interface OnItemClickListener {
+    fun onItemClick(id: String)
+}
+
+class ShopFragment : Fragment(), OnItemClickListener {
 
     private lateinit var binding: FragmentShopBinding
     private lateinit var navController: NavController
@@ -35,7 +38,27 @@ class ShopFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        super.onCreateOptionsMenu(menu, inflater)
+//        inflater.inflate(R.menu.back_menu, menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            android.R.id.home -> {
+////                 Handle back button click
+//                navController = NavHostFragment.findNavController(this)
+//                navController.navigateUp()
+//                true
+////                requireActivity().onBackPressed()
+////                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +74,7 @@ class ShopFragment : Fragment() {
             override fun onResponse(call: Call<List<Shop>?>, response: Response<List<Shop>?>) {
                 val shops = response.body()
 
-                adapter = shops?.let { ShopAdapter(it) }!!
+                adapter = shops?.let { ShopAdapter(it, this@ShopFragment) }!!
                 shopRecyclerView.adapter = adapter
             }
 
@@ -60,15 +83,12 @@ class ShopFragment : Fragment() {
             }
 
         })
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         session = LoginPreference(requireContext())
-
 
 //        val bundle = Bundle()
 //        bundle.putString("CustomerId", "${session.getUserDetails()["userId"]}")
@@ -82,4 +102,18 @@ class ShopFragment : Fragment() {
 //            navController.navigate(R.id.action_shop_fragment_to_cart_fragment, bundle)
 //        }
     }
+
+    override fun onItemClick(id: String) {
+        // Handle item click event here
+        Toast.makeText(requireContext(), "Item clicked at position: $id", Toast.LENGTH_SHORT).show()
+
+        
+
+        // Obtain reference to NavController
+        navController = view?.let { Navigation.findNavController(it) }!!
+        navController.navigate(R.id.action_shop_fragment_to_foodListFragment)
+
+    }
+
+
 }

@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -12,6 +14,8 @@ import androidx.navigation.ui.NavigationUI
 import com.example.cozykitchen.R
 import com.example.cozykitchen.databinding.ActivityMainBinding
 import com.example.cozykitchen.sharedPreference.LoginPreference
+import com.example.cozykitchen.ui.fragment.CartFragment
+import com.example.cozykitchen.ui.fragment.FoodListFragment
 import com.example.cozykitchen.ui.fragment.ShopFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
@@ -27,14 +31,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         // Appbar Title set to shop as the first loaded screen is shop
+//        val toolbar: Toolbar = findViewById(R.id.toolbar)
+//        toolbar.title = "Shop"
+//        setSupportActionBar(toolbar)
         supportActionBar?.title = "Shop"
 
         // start of setting up navigation
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         bottomNavigationView = binding.bottomNavBar
         navController = navHostFragment.navController
-//        NavigationUI.setupWithNavController(bottomNavigationView, navController)
+        NavigationUI.setupWithNavController(bottomNavigationView, navController)
         // end
 
         binding.bottomNavBar.setOnItemSelectedListener { menuItem ->
@@ -42,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_shop -> {
                     supportActionBar?.title = "Shop"
                     navController.navigate(R.id.shop_fragment)
+
                     true
                 }
                 R.id.navigation_cart -> {
