@@ -4,13 +4,16 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.SparseArray
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.*
 import com.example.cozykitchen.R
 import com.example.cozykitchen.databinding.ActivityMainBinding
 import com.example.cozykitchen.sharedPreference.LoginPreference
@@ -27,49 +30,48 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        // Appbar Title set to shop as the first loaded screen is shop
-//        val toolbar: Toolbar = findViewById(R.id.toolbar)
-//        toolbar.title = "Shop"
-//        setSupportActionBar(toolbar)
         supportActionBar?.title = "Shop"
 
         // start of setting up navigation
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         bottomNavigationView = binding.bottomNavBar
-        navController = navHostFragment.navController
-        NavigationUI.setupWithNavController(bottomNavigationView, navController)
-        // end
 
-        binding.bottomNavBar.setOnItemSelectedListener { menuItem ->
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+        setupActionBarWithNavController(navController)
+
+        // do not know what this function for
+//        bottomNavigationView.setupWithNavController(navController)
+
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_shop -> {
-                    supportActionBar?.title = "Shop"
+//                    supportActionBar?.title = "Shop"
                     navController.navigate(R.id.shop_fragment)
-
                     true
                 }
                 R.id.navigation_cart -> {
-                    supportActionBar?.title = "Cart"
+//                    supportActionBar?.title = "Cart"
                     navController.navigate(R.id.cart_fragment)
                     true
                 }
                 R.id.navigation_history -> {
-                    supportActionBar?.title = "History"
+//                    supportActionBar?.title = "History"
                     navController.navigate(R.id.history_fragment)
                     true
                 }
                 R.id.navigation_profile -> {
-                    supportActionBar?.title = "Profile"
+//                    supportActionBar?.title = "Profile"
                     navController.navigate(R.id.profile_fragment)
                     true
                 }
                 else -> false
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

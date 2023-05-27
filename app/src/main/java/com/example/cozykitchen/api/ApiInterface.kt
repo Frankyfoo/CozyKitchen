@@ -1,5 +1,6 @@
 package com.example.cozykitchen.api
 
+import com.example.cozykitchen.model.Product
 import com.example.cozykitchen.model.Shop
 import com.example.cozykitchen.model.User
 import okhttp3.RequestBody
@@ -26,6 +27,8 @@ interface ApiInterface {
     @GET("api/shop")
     fun getShops(): Call<List<Shop>>
 
+    @GET("api/product/shop/{id}")
+    fun getFoodByShopId(@Path("id") id: String): Call<List<Product>>
 }
 
 object KitchenApi {

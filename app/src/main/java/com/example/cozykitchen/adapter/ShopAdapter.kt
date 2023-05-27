@@ -1,20 +1,16 @@
 package com.example.cozykitchen.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cozykitchen.R
 import com.example.cozykitchen.model.Shop
 import com.example.cozykitchen.ui.fragment.OnItemClickListener
-import com.example.cozykitchen.ui.fragment.ShopFragment
 
 class ShopAdapter(private val shops: List<Shop>, private val listener: OnItemClickListener): RecyclerView.Adapter<ShopAdapter.ShopViewHolder>() {
 
@@ -26,16 +22,15 @@ class ShopAdapter(private val shops: List<Shop>, private val listener: OnItemCli
         init {
             shopCard.setOnClickListener {
                 val position = bindingAdapterPosition
-                Log.d("TestingAdapter", "$position")
                 if (position != RecyclerView.NO_POSITION) {
-                    val shopId = getShopId(position)
+                    val shopId = getShopObject(position)
                     listener.onItemClick(shopId)
                 }
             }
         }
 
-        private fun getShopId(position: Int): String {
-            return shops[position].shopId
+        private fun getShopObject(position: Int): Shop {
+            return shops[position]
         }
     }
 
