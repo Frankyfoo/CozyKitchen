@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cozykitchen.R
 import com.example.cozykitchen.model.Shop
-import com.example.cozykitchen.ui.fragment.OnItemClickListener
+import com.example.cozykitchen.ui.fragment.OnShopClickListener
 
-class ShopAdapter(private val shops: List<Shop>, private val listener: OnItemClickListener): RecyclerView.Adapter<ShopAdapter.ShopViewHolder>() {
+class ShopAdapter(private val shops: List<Shop>, private val listener: OnShopClickListener): RecyclerView.Adapter<ShopAdapter.ShopViewHolder>() {
 
     inner class ShopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val shopCard: CardView = itemView.findViewById(R.id.cardShop)
@@ -23,8 +23,8 @@ class ShopAdapter(private val shops: List<Shop>, private val listener: OnItemCli
             shopCard.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    val shopId = getShopObject(position)
-                    listener.onItemClick(shopId)
+                    val shop = getShopObject(position)
+                    listener.onItemClick(shop)
                 }
             }
         }

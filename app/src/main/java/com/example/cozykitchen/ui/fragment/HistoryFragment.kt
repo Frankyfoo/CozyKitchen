@@ -1,12 +1,14 @@
 package com.example.cozykitchen.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cozykitchen.R
+import com.example.cozykitchen.model.Product
 
 class HistoryFragment : Fragment() {
 

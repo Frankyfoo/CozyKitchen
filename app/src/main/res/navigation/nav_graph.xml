@@ -41,9 +41,14 @@
         android:label="fragment_food_list"
         tools:layout="@layout/fragment_food_list" >
         <action
-            android:id="@+id/action_foodListFragment_to_shop_fragment"
-            app:destination="@id/shop_fragment" />
+            android:id="@+id/action_foodListFragment_to_foodDetailFragment"
+            app:destination="@id/foodDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/foodDetailFragment"
+        android:name="com.example.cozykitchen.ui.fragment.FoodDetailFragment"
+        android:label="fragment_food_detail"
+        tools:layout="@layout/fragment_food_detail" />
 
 
 </navigation>

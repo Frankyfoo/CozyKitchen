@@ -1,7 +1,9 @@
 package com.example.cozykitchen.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.navigation.NavController
@@ -12,17 +14,18 @@ import com.example.cozykitchen.R
 import com.example.cozykitchen.adapter.ShopAdapter
 import com.example.cozykitchen.api.KitchenApi
 import com.example.cozykitchen.databinding.FragmentShopBinding
+import com.example.cozykitchen.model.Product
 import com.example.cozykitchen.model.Shop
 import com.example.cozykitchen.sharedPreference.LoginPreference
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-interface OnItemClickListener {
-    fun onItemClick(id: Shop)
+interface OnShopClickListener {
+    fun onItemClick(shop: Shop)
 }
 
-class ShopFragment : Fragment(), OnItemClickListener {
+class ShopFragment : Fragment(), OnShopClickListener {
 
     private lateinit var binding: FragmentShopBinding
     private lateinit var adapter: ShopAdapter
@@ -68,8 +71,8 @@ class ShopFragment : Fragment(), OnItemClickListener {
         val bundle = Bundle()
         bundle.putString("ShopId", shop.shopId)
         bundle.putString("ShopName", shop.shopName)
-        findNavController().navigate(R.id.action_shop_fragment_to_foodListFragment, bundle)
 
+        findNavController().navigate(R.id.action_shop_fragment_to_foodListFragment, bundle)
     }
 
 

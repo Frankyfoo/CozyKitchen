@@ -29,6 +29,9 @@ interface ApiInterface {
 
     @GET("api/product/shop/{id}")
     fun getFoodByShopId(@Path("id") id: String): Call<List<Product>>
+
+    @GET("api/product/{id}")
+    fun getFoodById(@Path("id") id: String): Call<Product>
 }
 
 object KitchenApi {

@@ -2,18 +2,12 @@ package com.example.cozykitchen.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,12 +17,16 @@ import com.example.cozykitchen.adapter.ProductAdapter
 import com.example.cozykitchen.api.KitchenApi
 import com.example.cozykitchen.databinding.FragmentFoodListBinding
 import com.example.cozykitchen.model.Product
+import com.example.cozykitchen.model.Shop
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+interface OnProductClickListener {
+    fun onItemClick(product: Product)
+}
 
-class FoodListFragment : Fragment() {
+class FoodListFragment : Fragment(), OnProductClickListener {
 
     private lateinit var binding: FragmentFoodListBinding
     private lateinit var adapter: ProductAdapter
@@ -59,11 +57,9 @@ class FoodListFragment : Fragment() {
                     response: Response<List<Product>?>
                 ) {
                     val products = response.body()
-//                    adapter = products?.let { ProductAdapter(it) }!!
-//                    foodRecyclerView.adapter = adapter
 
                     if (products != null && products.isNotEmpty()) {
-                        adapter = ProductAdapter(products)
+                        adapter = ProductAdapter(products, this@FoodListFragment)
                         foodRecyclerView.adapter = adapter
                         binding.noProductsTextView.visibility = View.GONE
                     } else {
@@ -87,7 +83,17 @@ class FoodListFragment : Fragment() {
 
         // Go back to previous page
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            findNavController().navigate(R.id.action_foodListFragment_to_shop_fragment)
+            findNavController().navigateUp()
         }
+    }
+
+    override fun onItemClick(product: Product) {
+        val bundle = Bundle()
+        bundle.apply {
+            putString("ProductId", product.productId)
+            putString("ProductName", product.productName)
+        }
+
+        findNavController().navigate(R.id.action_foodListFragment_to_foodDetailFragment, bundle)
     }
 }
