@@ -5,11 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
+import androidx.navigation.findNavController
+import com.example.cozykitchen.R
 import com.example.cozykitchen.api.KitchenApi
 import com.example.cozykitchen.databinding.ActivityLoginBinding
 import com.example.cozykitchen.helper.ValidatorSingleton
 import com.example.cozykitchen.model.User
 import com.example.cozykitchen.sharedPreference.LoginPreference
+import com.example.cozykitchen.sharedPreference.LoginPreference.Companion.KEY_USERID
+import com.example.cozykitchen.ui.fragment.ShopFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,22 +30,28 @@ class LoginActivity : AppCompatActivity() {
 
         session = LoginPreference(this)
 
-        // hide action bar
-        supportActionBar?.hide()
+        // if user has logged in before and did not press log out, it will go the MainActivity instead
+        if (session.getUserDetails()[KEY_USERID] != "") {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        } else {
+            // hide action bar
+            supportActionBar?.hide()
 
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+            binding = ActivityLoginBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-        binding.tvRegister.setOnClickListener {
-            toRegisterActivity()
-        }
+            binding.tvRegister.setOnClickListener {
+                toRegisterActivity()
+            }
 
-        binding.tvToChefLogin.setOnClickListener {
-            toChefLoginActivity()
-        }
+            binding.tvToChefLogin.setOnClickListener {
+                toChefLoginActivity()
+            }
 
-        binding.btnLogin.setOnClickListener {
-            login()
+            binding.btnLogin.setOnClickListener {
+                login()
+            }
         }
     }
 

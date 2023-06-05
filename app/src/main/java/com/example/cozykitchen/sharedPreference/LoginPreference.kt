@@ -51,10 +51,10 @@ class LoginPreference {
 
     fun getUserDetails(): HashMap<String, String> {
         var user: Map<String, String> = HashMap()
-        (user as HashMap)[KEY_USERID] = pref.getString(KEY_USERID, null)!!
-        (user as HashMap)[KEY_EMAIL] = pref.getString(KEY_EMAIL, null)!!
-        (user as HashMap)[KEY_PHONE_NUMBER] = pref.getString(KEY_PHONE_NUMBER, null)!!
-        (user as HashMap)[KEY_NAME] = pref.getString(KEY_NAME, null)!!
+        (user as HashMap)[KEY_USERID] = pref.getString(KEY_USERID, null)?: ""
+        (user as HashMap)[KEY_EMAIL] = pref.getString(KEY_EMAIL, null)?: ""
+        (user as HashMap)[KEY_PHONE_NUMBER] = pref.getString(KEY_PHONE_NUMBER, null)?: ""
+        (user as HashMap)[KEY_NAME] = pref.getString(KEY_NAME, null)?: ""
 
         return user
     }
@@ -74,8 +74,6 @@ class LoginPreference {
         editor.clear()
         editor.commit()
         var i = Intent(context, LoginActivity::class.java)
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(i)
     }
 }
