@@ -51,13 +51,13 @@ class ProductAdapter(private val products: List<Product>, private val listener: 
         holder.foodPrice.text = "RM " + currentProduct.productPrice.toString()
 
         // if no image url is empty, show no image jpg
-        if(currentProduct.productImageUrl.isNullOrEmpty()) {
+        if(currentProduct.productUrl.isNullOrEmpty()) {
             Glide.with(holder.itemView.context)
                 .load(R.drawable.no_image)
                 .into(holder.foodImage)
         } else {
             Glide.with(holder.itemView.context)
-                .load(currentProduct.productImageUrl)
+                .load(currentProduct.productUrl)
                 .into(holder.foodImage)
         }
     }

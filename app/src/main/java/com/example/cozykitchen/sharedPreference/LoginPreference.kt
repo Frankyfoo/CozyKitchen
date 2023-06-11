@@ -59,6 +59,10 @@ class LoginPreference {
         return user
     }
 
+    fun getCurrentUserId(): String {
+        return pref.getString(KEY_USERID, null) ?: ""
+    }
+
     // this function is to return an User object type who has logged in (still incomplete)
 //    fun convertToUserObject(): User {
 //        val hashMap = getUserDetails()

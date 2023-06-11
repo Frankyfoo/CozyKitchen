@@ -2,6 +2,7 @@ package com.example.cozykitchen.api
 
 import com.example.cozykitchen.model.Product
 import com.example.cozykitchen.model.Shop
+import com.example.cozykitchen.model.ShoppingCart
 import com.example.cozykitchen.model.User
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -32,6 +33,10 @@ interface ApiInterface {
 
     @GET("api/product/{id}")
     fun getFoodById(@Path("id") id: String): Call<Product>
+
+    @Headers("Content-Type: application/json")
+    @POST("api/shoppingcart")
+    fun addProductToCart(@Body requestBody: RequestBody): Call<ShoppingCart>
 }
 
 object KitchenApi {
