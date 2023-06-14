@@ -79,7 +79,7 @@ class FoodDetailFragment : Fragment() {
                 override fun onResponse(call: Call<Product>, response: Response<Product>) {
 
                     val product = response.body()
-                    Log.d("Testing", "$product")
+//                    Log.d("Testing", "$product")
 
                     if (product != null) {
                         if (product.productUrl.isNullOrEmpty()) {
@@ -160,7 +160,7 @@ class FoodDetailFragment : Fragment() {
 
 
             val cartItem = ShoppingCart(
-                "Test", currentUserId, productId, size, quantity, customizationText, "PAY_PENDING", null
+                "Test", currentUserId, productId, size, quantity, customizationText, "PAY_PENDING", null, null
             )
 
             val cartRequestBody = RequestBodySingleton.makeGSONRequestBody(cartItem)

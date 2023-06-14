@@ -8,5 +8,6 @@ data class ShoppingCart(
     val quantityBought: Int,
     val customizationDescription: String?,
     val status: String,
-    val OrderId: String?
+    val orderId: String?,
+    val product: Product?
 )

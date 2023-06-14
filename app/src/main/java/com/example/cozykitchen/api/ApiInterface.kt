@@ -37,6 +37,9 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("api/shoppingcart")
     fun addProductToCart(@Body requestBody: RequestBody): Call<ShoppingCart>
+
+    @GET("api/shoppingcart/GetShoppingCartListByUserId/{userId}")
+    fun GetShoppingCartListByUserId(@Path("userId") userId: String): Call<List<ShoppingCart>>
 }
 
 object KitchenApi {
