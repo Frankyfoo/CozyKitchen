@@ -29,8 +29,6 @@ import retrofit2.Response
 
 class CartFragment : Fragment() {
 
-    //    private lateinit var button: Button
-
     private lateinit var binding: FragmentCartBinding
     private lateinit var adapter: CartAdapter
     private lateinit var session: LoginPreference
@@ -108,6 +106,11 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Close the application when back button is pressed
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().finishAffinity()
+        }
 
         // Hide the back button in the app bar
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)

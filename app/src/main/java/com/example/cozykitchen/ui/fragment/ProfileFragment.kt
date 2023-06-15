@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.cozykitchen.R
@@ -42,11 +43,21 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Close the application when back button is pressed
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().finishAffinity()
+        }
+
         // Hide the back button in the app bar
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
+        // logs out user
         binding.btnLogout.setOnClickListener {
             session.LogoutUser()
+        }
+
+        binding.btnManageAddress.setOnClickListener {
+            findNavController().navigate(R.id.action_profile_fragment_to_addressListFragment)
         }
     }
 }

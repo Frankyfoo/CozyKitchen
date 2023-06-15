@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,6 +66,11 @@ class ShopFragment : Fragment(), OnShopClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Close the application when back button is pressed
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().finishAffinity()
+        }
     }
 
     override fun onItemClick(shop: Shop) {

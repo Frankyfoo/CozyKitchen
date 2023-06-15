@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.findNavController
@@ -53,6 +55,14 @@ class LoginActivity : AppCompatActivity() {
                 login()
             }
         }
+
+        // Close the application when back button is pressed
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finishAffinity()
+            }
+        }
+        this.onBackPressedDispatcher.addCallback(this, callback)
     }
 
     private fun toChefLoginActivity() {

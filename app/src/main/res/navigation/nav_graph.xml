@@ -34,7 +34,11 @@
         android:id="@+id/profile_fragment"
         android:name="com.example.cozykitchen.ui.fragment.ProfileFragment"
         android:label="Cart"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profile_fragment_to_addressListFragment"
+            app:destination="@id/addressListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/foodListFragment"
         android:name="com.example.cozykitchen.ui.fragment.FoodListFragment"
@@ -49,6 +53,20 @@
         android:name="com.example.cozykitchen.ui.fragment.FoodDetailFragment"
         android:label="fragment_food_detail"
         tools:layout="@layout/fragment_food_detail" />
+    <fragment
+        android:id="@+id/addressListFragment"
+        android:name="com.example.cozykitchen.ui.fragment.AddressListFragment"
+        android:label="fragment_address_list"
+        tools:layout="@layout/fragment_address_list" >
+        <action
+            android:id="@+id/action_addressListFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.example.cozykitchen.ui.fragment.AddressFragment"
+        android:label="fragment_address"
+        tools:layout="@layout/fragment_address" />
 
 
 </navigation>
