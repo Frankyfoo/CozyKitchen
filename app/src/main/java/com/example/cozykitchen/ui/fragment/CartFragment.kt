@@ -56,7 +56,7 @@ class CartFragment : Fragment() {
         val cartRecyclerView: RecyclerView = binding.cartRecyclerView
         cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        KitchenApi.retrofitService.GetShoppingCartListByUserId(userId).enqueue(object: Callback<List<ShoppingCart>>{
+        KitchenApi.retrofitService.getShoppingCartListByUserId(userId).enqueue(object: Callback<List<ShoppingCart>>{
                 override fun onResponse(
                     call: Call<List<ShoppingCart>>,
                     response: Response<List<ShoppingCart>>

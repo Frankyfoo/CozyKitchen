@@ -31,7 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import java.util.*
 
 interface OnMarkerDragListener {
-    fun onMarkerDragEnd(locationString: String)
+    fun onMarkerDragEnd(locationString: String, latitude: Double, longitude: Double)
 }
 
 class MapFragment : Fragment(), OnMapReadyCallback{
@@ -86,7 +86,7 @@ class MapFragment : Fragment(), OnMapReadyCallback{
 
                         // check if there is Address or not
                         if (!physicalLocationString.isNullOrEmpty()) {
-                            markerDragListener?.onMarkerDragEnd(physicalLocationString)
+                            markerDragListener?.onMarkerDragEnd(physicalLocationString, currentLatLng.latitude, currentLatLng.longitude)
                         } else {
                             Toast.makeText(requireContext(), "No Address Found", Toast.LENGTH_SHORT).show()
                         }
@@ -120,7 +120,7 @@ class MapFragment : Fragment(), OnMapReadyCallback{
 
                                 // check if there is Address or not
                                 if (!physicalLocationString.isNullOrEmpty()) {
-                                    markerDragListener?.onMarkerDragEnd(physicalLocationString)
+                                    markerDragListener?.onMarkerDragEnd(physicalLocationString, newPosition.latitude, newPosition.longitude)
                                 } else {
                                     Toast.makeText(requireContext(), "No Address Found", Toast.LENGTH_SHORT).show()
                                 }

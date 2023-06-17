@@ -1,9 +1,7 @@
 package com.example.cozykitchen.api
 
-import com.example.cozykitchen.model.Product
-import com.example.cozykitchen.model.Shop
-import com.example.cozykitchen.model.ShoppingCart
-import com.example.cozykitchen.model.User
+import com.example.cozykitchen.model.*
+import com.example.cozykitchen.request.PostAddress
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -39,7 +37,29 @@ interface ApiInterface {
     fun addProductToCart(@Body requestBody: RequestBody): Call<ShoppingCart>
 
     @GET("api/shoppingcart/GetShoppingCartListByUserId/{userId}")
-    fun GetShoppingCartListByUserId(@Path("userId") userId: String): Call<List<ShoppingCart>>
+    fun getShoppingCartListByUserId(@Path("userId") userId: String): Call<List<ShoppingCart>>
+
+
+    // Address API
+    @Headers("Content-Type: application/json")
+    @POST("api/address")
+    fun addNewAddress(@Body requestBody: RequestBody): Call<PostAddress>
+
+    @GET("api/address/getaddressesbyuserid/{userId}")
+    fun getAddressesByUserId(@Path("userId") userId: String): Call<List<Address>>
+
+    @GET("api/address/{id}")
+    fun getAddressById(@Path("id") id: String): Call<Address>
+
+    @Headers("Content-Type: application/json")
+    @PUT("api/address/{id}")
+    fun updateAddress(@Path("id") id: String, @Body requestBody: RequestBody): Call<Address>
+
+    @DELETE("api/address/{id}")
+    fun deleteAddress(@Path("id") id: String): Call<Address>
+
+    // Card API
+
 }
 
 object KitchenApi {
