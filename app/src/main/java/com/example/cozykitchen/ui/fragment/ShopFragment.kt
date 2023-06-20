@@ -1,5 +1,9 @@
 package com.example.cozykitchen.ui.fragment
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
+import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -7,6 +11,9 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +25,10 @@ import com.example.cozykitchen.databinding.FragmentShopBinding
 import com.example.cozykitchen.model.Product
 import com.example.cozykitchen.model.Shop
 import com.example.cozykitchen.sharedPreference.LoginPreference
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +43,8 @@ class ShopFragment : Fragment(), OnShopClickListener {
     private lateinit var adapter: ShopAdapter
     private lateinit var shopRecyclerView: RecyclerView
 
+    private var userLocation: LatLng? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -41,8 +54,25 @@ class ShopFragment : Fragment(), OnShopClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_shop, container, false)
+
+        // Request location permission
+        // ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001)
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location ->
+                    if (location != null) {
+                        // get user last known location
+                        userLocation = LatLng(location.latitude, location.longitude)
+//                        Log.d("LocationTesting", "${userLocation!!.latitude}, ${userLocation!!.longitude}")
+                    }
+                }
+        } else {
+            // Request location permission
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001)
+        }
+
         binding = FragmentShopBinding.inflate(inflater, container, false)
         shopRecyclerView = binding.shopRecyclerView
         shopRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -50,7 +80,18 @@ class ShopFragment : Fragment(), OnShopClickListener {
         // Api Call and RecyclerView Populated
         KitchenApi.retrofitService.getShops().enqueue(object : Callback<List<Shop>?> {
             override fun onResponse(call: Call<List<Shop>?>, response: Response<List<Shop>?>) {
-                val shops = response.body()
+                val shops = response.body() as MutableList?
+
+                // calculate and store the distance value between user and each shop
+                shops?.forEach { shop ->
+                    userLocation?.let {
+                        val distance = calculateDistance(it, LatLng(shop.latitude, shop.longitude))
+                        shop.distance = distance / 1000f
+                    }
+                }
+
+                // sort the Shops List by distance
+                shops?.sortBy { it.distance }
 
                 adapter = shops?.let { ShopAdapter(it, this@ShopFragment) }!!
                 shopRecyclerView.adapter = adapter
@@ -79,6 +120,18 @@ class ShopFragment : Fragment(), OnShopClickListener {
         bundle.putString("ShopName", shop.shopName)
 
         findNavController().navigate(R.id.action_shop_fragment_to_foodListFragment, bundle)
+    }
+
+    private fun calculateDistance(userLocation: LatLng, shopLocation: LatLng): Float {
+        val userLocationPoint = Location("")
+        userLocationPoint.latitude = userLocation.latitude
+        userLocationPoint.longitude = userLocation.longitude
+
+        val shopLocationPoint = Location("")
+        shopLocationPoint.latitude = shopLocation.latitude
+        shopLocationPoint.longitude = shopLocation.longitude
+
+        return userLocationPoint.distanceTo(shopLocationPoint)
     }
 
 

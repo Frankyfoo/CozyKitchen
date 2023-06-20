@@ -76,6 +76,10 @@ interface ApiInterface {
 
     @DELETE("api/card/{id}")
     fun deleteCard(@Path("id") id: String): Call<Card>
+
+    // Helper API
+    @GET("api/helper/gettimelist")
+    fun getTimeList(): Call<List<TimeList>>
 }
 
 object KitchenApi {

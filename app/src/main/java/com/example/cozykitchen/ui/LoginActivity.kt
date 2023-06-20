@@ -1,5 +1,6 @@
 package com.example.cozykitchen.ui
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,12 +8,14 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.findNavController
 import com.example.cozykitchen.R
 import com.example.cozykitchen.api.KitchenApi
 import com.example.cozykitchen.databinding.ActivityLoginBinding
 import com.example.cozykitchen.helper.ValidatorSingleton
+import com.example.cozykitchen.model.TimeList
 import com.example.cozykitchen.model.User
 import com.example.cozykitchen.sharedPreference.LoginPreference
 import com.example.cozykitchen.sharedPreference.LoginPreference.Companion.KEY_USERID
@@ -31,6 +34,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         session = LoginPreference(this)
+
+        // Request location permission
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001)
 
         // if user has logged in before and did not press log out, it will go the MainActivity instead
         if (session.getUserDetails()[KEY_USERID] != "") {

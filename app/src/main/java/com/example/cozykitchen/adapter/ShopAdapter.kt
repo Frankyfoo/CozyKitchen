@@ -18,6 +18,7 @@ class ShopAdapter(private val shops: List<Shop>, private val listener: OnShopCli
         private val shopCard: CardView = itemView.findViewById(R.id.cardShop)
         val shopImage: ImageView = itemView.findViewById(R.id.imageShop)
         val shopName: TextView = itemView.findViewById(R.id.tvShopName)
+        val shopDistance: TextView = itemView.findViewById(R.id.tv_distance)
 
         init {
             shopCard.setOnClickListener {
@@ -48,6 +49,7 @@ class ShopAdapter(private val shops: List<Shop>, private val listener: OnShopCli
 
         // Bind data to views
         holder.shopName.text = currentShop.shopName
+        holder.shopDistance.text = "Distance: ${String.format("%.1f", currentShop.distance)} Km from your location."
 
         // if no image url is empty, show no image jpg
         if(currentShop.shopImageUrl.isEmpty()) {

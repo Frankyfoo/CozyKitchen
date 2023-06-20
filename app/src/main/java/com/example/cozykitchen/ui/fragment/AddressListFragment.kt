@@ -95,7 +95,7 @@ class AddressListFragment : Fragment(), OnAddressClickListener {
         }
 
         // Request location permission
-        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001)
+        // ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001)
 
         // FAB for adding new Address
         binding.fabAddAddress.setOnClickListener{

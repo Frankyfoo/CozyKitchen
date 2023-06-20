@@ -24,17 +24,40 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
+                android:id="@+id/tv_title_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TitleTextViewStyle"
+                android:text="Ordering Time"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_food" />
+
+            <Spinner
+                android:id="@+id/spinner_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="Dropdownlist"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_time" />
+
+            <TextView
                 android:id="@+id/tv_title_description"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Description"
                 android:textSize="25sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_food" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_time" />
 
             <TextView
                 android:id="@+id/tv_description"
