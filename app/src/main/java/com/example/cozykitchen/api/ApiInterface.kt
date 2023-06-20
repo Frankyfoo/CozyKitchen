@@ -2,6 +2,7 @@ package com.example.cozykitchen.api
 
 import com.example.cozykitchen.model.*
 import com.example.cozykitchen.request.PostAddress
+import com.example.cozykitchen.request.PostCard
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -59,7 +60,22 @@ interface ApiInterface {
     fun deleteAddress(@Path("id") id: String): Call<Address>
 
     // Card API
+    @Headers("Content-Type: application/json")
+    @POST("api/card")
+    fun addNewCard(@Body requestBody: RequestBody): Call<PostCard>
 
+    @GET("api/card/getcardsbyuserid/{userId}")
+    fun getCardsByUserId(@Path("userId") userId: String): Call<List<Card>>
+
+    @GET("api/card/{id}")
+    fun getCardById(@Path("id") id: String): Call<Card>
+
+    @Headers("Content-Type: application/json")
+    @PUT("api/card/{id}")
+    fun updateCard(@Path("id") id: String, @Body requestBody: RequestBody): Call<Card>
+
+    @DELETE("api/card/{id}")
+    fun deleteCard(@Path("id") id: String): Call<Card>
 }
 
 object KitchenApi {

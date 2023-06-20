@@ -150,7 +150,7 @@ class AddressFragment : Fragment(), OnMarkerDragListener {
         }
     }
 
-    fun addAddress(requestBody: RequestBody) {
+    private fun addAddress(requestBody: RequestBody) {
         KitchenApi.retrofitService.addNewAddress(requestBody).enqueue(object: Callback<PostAddress?>{
             override fun onResponse(call: Call<PostAddress?>, response: Response<PostAddress?>) {
                 Toast.makeText(requireContext(), "Address Added Successfully", Toast.LENGTH_SHORT).show()

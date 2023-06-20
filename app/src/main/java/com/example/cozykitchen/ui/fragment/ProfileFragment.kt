@@ -59,5 +59,9 @@ class ProfileFragment : Fragment() {
         binding.btnManageAddress.setOnClickListener {
             findNavController().navigate(R.id.action_profile_fragment_to_addressListFragment)
         }
+
+        binding.btnManagePayment.setOnClickListener {
+            findNavController().navigate(R.id.action_profile_fragment_to_cardListFragment)
+        }
     }
 }
