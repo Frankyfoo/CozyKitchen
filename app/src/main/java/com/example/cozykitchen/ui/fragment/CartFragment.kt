@@ -13,6 +13,7 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cozykitchen.R
@@ -32,6 +33,7 @@ class CartFragment : Fragment() {
     private lateinit var binding: FragmentCartBinding
     private lateinit var adapter: CartAdapter
     private lateinit var session: LoginPreference
+    private lateinit var btnPurchase: Button
 
     private var totalCost: Float = 0.0f
     private var deliveryCost: Float = 3.0f
@@ -53,6 +55,13 @@ class CartFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title = "Cart"
 
         binding = FragmentCartBinding.inflate(inflater, container, false)
+
+        // bind to variable
+        btnPurchase = binding.btnPurchase
+
+        // This is set so that the bottomLayout will not show when the cart is empty
+        binding.linearLayoutBottom.visibility = View.GONE
+
         val cartRecyclerView: RecyclerView = binding.cartRecyclerView
         cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -114,5 +123,13 @@ class CartFragment : Fragment() {
 
         // Hide the back button in the app bar
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+        btnPurchase.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putFloat("TotalCost", String.format("%.2f", totalCost).toFloat())
+            bundle.putString("UserId", session.getCurrentUserId())
+
+            findNavController().navigate(R.id.action_cart_fragment_to_confirmPurchaseFragment, bundle)
+        }
     }
 }

@@ -86,7 +86,6 @@ class FoodDetailFragment : Fragment() {
         val timeListString: MutableList<String> = mutableListOf()
         val timeList = TimeListGenerator().generateTimeList()
 
-
         for (time in timeList) {
             val timeString = time.text
             timeListString.add(timeString)

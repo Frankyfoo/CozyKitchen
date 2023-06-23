@@ -22,7 +22,11 @@
         android:id="@+id/cart_fragment"
         android:name="com.example.cozykitchen.ui.fragment.CartFragment"
         android:label="Cart"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_cart_fragment_to_confirmPurchaseFragment"
+            app:destination="@id/confirmPurchaseFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/history_fragment"
@@ -84,6 +88,11 @@
         android:name="com.example.cozykitchen.ui.fragment.AddCardFragment"
         android:label="fragment_add_card"
         tools:layout="@layout/fragment_add_card" />
+    <fragment
+        android:id="@+id/confirmPurchaseFragment"
+        android:name="com.example.cozykitchen.ui.fragment.ConfirmPurchaseFragment"
+        android:label="fragment_confirm_purchase"
+        tools:layout="@layout/fragment_confirm_purchase" />
 
 
 </navigation>

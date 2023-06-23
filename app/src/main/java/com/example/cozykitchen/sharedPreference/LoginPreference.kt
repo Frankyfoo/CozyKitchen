@@ -63,17 +63,6 @@ class LoginPreference {
         return pref.getString(KEY_USERID, null) ?: ""
     }
 
-    // this function is to return an User object type who has logged in (still incomplete)
-//    fun convertToUserObject(): User {
-//        val hashMap = getUserDetails()
-//
-//        val gson = Gson()
-//        val jsonString = gson.toJson(hashMap)
-//
-//        // Convert the JSON string back to an object
-//        return gson.fromJson(jsonString, User::class.java)
-//    }
-
     fun LogoutUser() {
         editor.clear()
         editor.commit()

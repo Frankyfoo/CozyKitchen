@@ -3,6 +3,7 @@ package com.example.cozykitchen.api
 import com.example.cozykitchen.model.*
 import com.example.cozykitchen.request.PostAddress
 import com.example.cozykitchen.request.PostCard
+import com.example.cozykitchen.request.PostOrder
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -17,6 +18,8 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface ApiInterface {
+
+    // User API
     @GET("api/user")
     fun getUsers(): Call<List<User>>
 
@@ -24,22 +27,24 @@ interface ApiInterface {
     @POST("api/user")
     fun createUser(@Body requestBody: RequestBody): Call<User>
 
+    // Shop API
     @GET("api/shop")
     fun getShops(): Call<List<Shop>>
 
+    // Product API
     @GET("api/product/shop/{id}")
     fun getFoodByShopId(@Path("id") id: String): Call<List<Product>>
 
     @GET("api/product/{id}")
     fun getFoodById(@Path("id") id: String): Call<Product>
 
+    // ShoopingCart API
     @Headers("Content-Type: application/json")
     @POST("api/shoppingcart")
     fun addProductToCart(@Body requestBody: RequestBody): Call<ShoppingCart>
 
     @GET("api/shoppingcart/GetShoppingCartListByUserId/{userId}")
     fun getShoppingCartListByUserId(@Path("userId") userId: String): Call<List<ShoppingCart>>
-
 
     // Address API
     @Headers("Content-Type: application/json")
@@ -77,9 +82,14 @@ interface ApiInterface {
     @DELETE("api/card/{id}")
     fun deleteCard(@Path("id") id: String): Call<Card>
 
-    // Helper API
-    @GET("api/helper/gettimelist")
-    fun getTimeList(): Call<List<TimeList>>
+    // Order API
+
+    @GET("api/order/{id}")
+    fun getOrderById(@Path("id") id: String): Call<Order>
+
+    @Headers("Content-Type: application/json")
+    @POST("api/order")
+    fun addOrder(@Body requestBody: RequestBody): Call<PostOrder>
 }
 
 object KitchenApi {
