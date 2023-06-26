@@ -46,6 +46,9 @@ interface ApiInterface {
     @GET("api/shoppingcart/GetShoppingCartListByUserId/{userId}")
     fun getShoppingCartListByUserId(@Path("userId") userId: String): Call<List<ShoppingCart>>
 
+    @GET("api/shoppingcart/getshoppingcartlistbyorderid/{orderId}")
+    fun getShoppingCartListByOrderId(@Path("orderId") orderId: String): Call<List<ShoppingCart>>
+
     // Address API
     @Headers("Content-Type: application/json")
     @POST("api/address")
@@ -86,6 +89,9 @@ interface ApiInterface {
 
     @GET("api/order/{id}")
     fun getOrderById(@Path("id") id: String): Call<Order>
+
+    @GET("api/order/OrdersbyUserId/{userId}")
+    fun getOrdersByUserId(@Path("userId") userId: String): Call<List<Order>>
 
     @Headers("Content-Type: application/json")
     @POST("api/order")

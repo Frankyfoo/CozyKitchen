@@ -7,4 +7,5 @@ data class Order(
     val user: User,
     val address: Address,
     val card: Card,
+//    val products: List<Product>,
 )

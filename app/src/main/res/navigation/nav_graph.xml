@@ -32,7 +32,11 @@
         android:id="@+id/history_fragment"
         android:name="com.example.cozykitchen.ui.fragment.HistoryFragment"
         android:label="Cart"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_history_fragment_to_orderedFoodList"
+            app:destination="@id/orderedFoodList" />
+    </fragment>
 
     <fragment
         android:id="@+id/profile_fragment"
@@ -93,6 +97,11 @@
         android:name="com.example.cozykitchen.ui.fragment.ConfirmPurchaseFragment"
         android:label="fragment_confirm_purchase"
         tools:layout="@layout/fragment_confirm_purchase" />
+    <fragment
+        android:id="@+id/orderedFoodList"
+        android:name="com.example.cozykitchen.ui.fragment.OrderedFoodList"
+        android:label="fragment_ordered_food_list"
+        tools:layout="@layout/fragment_ordered_food_list" />
 
 
 </navigation>

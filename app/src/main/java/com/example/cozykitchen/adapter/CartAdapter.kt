@@ -20,7 +20,8 @@ class CartAdapter(private val shoppingCarts: List<ShoppingCart>): RecyclerView.A
         val productQuantity: TextView = itemView.findViewById(R.id.tv_product_quantity)
         val productPrice: TextView = itemView.findViewById(R.id.tv_product_price)
         val productDescription: TextView = itemView.findViewById(R.id.tv_cart_description)
-//        val btnRemoveFromCart: Button = itemView.findViewById(R.id.btn_remove_from_cart)
+        val productDeliveryTime: TextView = itemView.findViewById(R.id.tv_product_delivery_time)
+        val btnRemoveFromCart: Button = itemView.findViewById(R.id.btn_remove_from_cart)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
@@ -39,6 +40,13 @@ class CartAdapter(private val shoppingCarts: List<ShoppingCart>): RecyclerView.A
             holder.productName.text = currentCart.product.productName
             holder.productSize.text = currentCart.size
             holder.productQuantity.text = "Qty: ${currentCart.quantityBought}"
+            holder.productDeliveryTime.text = "Delivery Time: \n" + currentCart.deliveryDateTimeString
+
+            if (!currentCart.orderId.isNullOrEmpty() || currentCart.status == "PAY_COMPLETED") {
+                holder.btnRemoveFromCart.visibility = View.GONE
+            } else {
+                holder.btnRemoveFromCart.visibility = View.VISIBLE
+            }
 
             if (currentCart.size == "Large") {
                 holder.productPrice.text = "RM ${currentCart.product.productPrice + 2.00f}"
