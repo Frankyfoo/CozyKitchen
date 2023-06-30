@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.findNavController
 import com.example.cozykitchen.R
 import com.example.cozykitchen.api.KitchenApi
+import com.example.cozykitchen.chef.activity.ChefMainActivity
 import com.example.cozykitchen.databinding.ActivityLoginBinding
 import com.example.cozykitchen.helper.ValidatorSingleton
 import com.example.cozykitchen.model.TimeList
@@ -38,9 +39,13 @@ class LoginActivity : AppCompatActivity() {
         // Request location permission
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001)
 
+        //session.getUserDetails()[KEY_USERID]?.startsWith("CUS") == true
         // if user has logged in before and did not press log out, it will go the MainActivity instead
-        if (session.getUserDetails()[KEY_USERID] != "") {
+        if (session.getCurrentUserId().startsWith("CUS")) {
             val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        } else if (session.getCurrentUserId().startsWith("CHEF")) {
+            val intent = Intent(this, ChefMainActivity::class.java)
             startActivity(intent)
         } else {
             // hide action bar

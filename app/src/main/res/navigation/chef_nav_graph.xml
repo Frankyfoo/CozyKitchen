@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chef_nav_graph"
+    app:startDestination="@id/menuFragment">
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.cozykitchen.chef.fragment.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/chefProfileFragment"
+        android:name="com.example.cozykitchen.chef.fragment.ChefProfileFragment"
+        android:label="fragment_chef_profile"
+        tools:layout="@layout/fragment_chef_profile" />
+    <fragment
+        android:id="@+id/chefHistoryFragment"
+        android:name="com.example.cozykitchen.chef.fragment.ChefHistoryFragment"
+        android:label="fragment_chef_history"
+        tools:layout="@layout/fragment_chef_history" />
+</navigation>

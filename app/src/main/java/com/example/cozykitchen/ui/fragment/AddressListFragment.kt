@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -104,13 +105,14 @@ class AddressListFragment : Fragment(), OnAddressClickListener {
     }
 
     override fun onCardClick(address: Address) {
-//        val bundle = Bundle().apply {
-//                putString("AddressId", address.addressId)
-//        }
-//
-//        Toast.makeText(requireContext(), "${address.addressId}", Toast.LENGTH_SHORT).show()
-//
-//        findNavController().navigate(R.id.action_addressListFragment_to_addressFragment, bundle)
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+        alertDialogBuilder.setTitle("Address Details")
+        alertDialogBuilder.setMessage("Address: ${address.name}\n\nStreet: ${address.street}\n\nStreet Number: ${address.streetNumber}\n\nPostal Code: ${address.postalCode}\n\nInstruction: ${address.instruction}")
+        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
+            // only close the dialog
+        }
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
     override fun onDeleteClick(addressId: String) {

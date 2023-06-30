@@ -21,6 +21,7 @@ import com.example.cozykitchen.adapter.CartAdapter
 import com.example.cozykitchen.api.KitchenApi
 import com.example.cozykitchen.databinding.FragmentCartBinding
 import com.example.cozykitchen.databinding.FragmentShopBinding
+import com.example.cozykitchen.model.Shop
 import com.example.cozykitchen.model.ShoppingCart
 import com.example.cozykitchen.model.User
 import com.example.cozykitchen.sharedPreference.LoginPreference
@@ -28,7 +29,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CartFragment : Fragment() {
+interface OnCartClickListener {
+    fun onRemoveButtonClick(shoppingCartId: String)
+}
+
+class CartFragment : Fragment(), OnCartClickListener {
 
     private lateinit var binding: FragmentCartBinding
     private lateinit var adapter: CartAdapter
@@ -37,6 +42,7 @@ class CartFragment : Fragment() {
 
     private var totalCost: Float = 0.0f
     private var deliveryCost: Float = 3.0f
+    private var shoppingCartList: MutableList<ShoppingCart>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,17 +76,17 @@ class CartFragment : Fragment() {
                     call: Call<List<ShoppingCart>>,
                     response: Response<List<ShoppingCart>>
                 ) {
-                    var shoppingCartList = response.body()
+                    shoppingCartList = response.body() as MutableList<ShoppingCart>?
 //                    Log.d("CartTesting", shoppingCartList.toString())
-                    if (shoppingCartList != null && shoppingCartList.isNotEmpty()) {
-                        adapter = CartAdapter(shoppingCartList)
+                    if (shoppingCartList != null && shoppingCartList!!.isNotEmpty()) {
+                        adapter = CartAdapter(shoppingCartList!!, this@CartFragment)
                         cartRecyclerView.adapter = adapter
 
                         // show bottom layout (Price) and hide no cart found text
                         binding.tvNoCartItemFound.visibility = View.GONE
                         binding.linearLayoutBottom.visibility = View.VISIBLE
 
-                        for (shoppingCart in shoppingCartList) {
+                        for (shoppingCart in shoppingCartList!!) {
                             if (shoppingCart.size == "Large") {
                                 val price = (shoppingCart.product!!.productPrice + 2.00f) * shoppingCart.quantityBought
                                 totalCost += price
@@ -131,5 +137,43 @@ class CartFragment : Fragment() {
 
             findNavController().navigate(R.id.action_cart_fragment_to_confirmPurchaseFragment, bundle)
         }
+    }
+
+    override fun onRemoveButtonClick(shoppingCartId: String) {
+        KitchenApi.retrofitService.deleteShoppingCart(shoppingCartId).enqueue(object: Callback<ShoppingCart>{
+            override fun onResponse(call: Call<ShoppingCart>, response: Response<ShoppingCart>) {
+
+                // ShoppingCart deleted successfully, remove it from the list
+                val deletedShoppingCart = findDeletedShoppingCartFromList(shoppingCartId)
+
+                deletedShoppingCart.let {
+                    // Remove the deleted ShoppingCart Item from the list
+                    shoppingCartList!!.remove(deletedShoppingCart)
+                    // Notify the adapter that the data set has changed
+                    adapter.notifyDataSetChanged()
+                    Toast.makeText(requireContext(), "Deleted Successfully.", Toast.LENGTH_SHORT).show()
+
+                    // show no shopping cart item found text
+                    if (shoppingCartList.isNullOrEmpty()) {
+                        binding.tvNoCartItemFound.visibility = View.VISIBLE
+                        binding.linearLayoutBottom.visibility = View.GONE
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ShoppingCart>, t: Throwable) {
+                Toast.makeText(requireContext(), "$t", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun findDeletedShoppingCartFromList(shoppingCartId: String): ShoppingCart? {
+        // Iterate through the shoppingCartList and find the deleted address using its ID
+        for (shoppingCart in shoppingCartList!!) {
+            if (shoppingCart.shoppingCartId == shoppingCartId) {
+                return shoppingCart
+            }
+        }
+        return null
     }
 }

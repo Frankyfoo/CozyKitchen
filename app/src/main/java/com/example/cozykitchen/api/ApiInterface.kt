@@ -49,6 +49,9 @@ interface ApiInterface {
     @GET("api/shoppingcart/getshoppingcartlistbyorderid/{orderId}")
     fun getShoppingCartListByOrderId(@Path("orderId") orderId: String): Call<List<ShoppingCart>>
 
+    @DELETE("api/shoppingcart/{id}")
+    fun deleteShoppingCart(@Path("id") id: String): Call<ShoppingCart>
+
     // Address API
     @Headers("Content-Type: application/json")
     @POST("api/address")
@@ -86,7 +89,6 @@ interface ApiInterface {
     fun deleteCard(@Path("id") id: String): Call<Card>
 
     // Order API
-
     @GET("api/order/{id}")
     fun getOrderById(@Path("id") id: String): Call<Order>
 
@@ -96,6 +98,10 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("api/order")
     fun addOrder(@Body requestBody: RequestBody): Call<PostOrder>
+
+    // Chef API
+    @GET("api/chef")
+    fun getChefs(): Call<List<Chef>>
 }
 
 object KitchenApi {

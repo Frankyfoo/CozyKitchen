@@ -29,15 +29,15 @@ class AddressAdapter(private val addresses: List<Address>, private val listener:
             }
         }
 
-//        init {
-//            cardAddress.setOnClickListener {
-//                val position = bindingAdapterPosition
-//                if (position != RecyclerView.NO_POSITION) {
-//                    val address = getAddressObject(position)
-//                    listener.onCardClick(address)
-//                }
-//            }
-//        }
+        init {
+            cardAddress.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val address = getAddressObject(position)
+                    listener.onCardClick(address)
+                }
+            }
+        }
 
         private fun getAddressObject(position: Int): Address {
             return addresses[position]

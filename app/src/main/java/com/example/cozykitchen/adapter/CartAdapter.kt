@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cozykitchen.R
 import com.example.cozykitchen.model.ShoppingCart
+import com.example.cozykitchen.ui.fragment.OnCartClickListener
 
-class CartAdapter(private val shoppingCarts: List<ShoppingCart>): RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
+class CartAdapter(private val shoppingCarts: List<ShoppingCart>, private val listener: OnCartClickListener? = null): RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     inner class CartViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val cartImage: ImageView = itemView.findViewById(R.id.cart_image)
@@ -22,6 +23,20 @@ class CartAdapter(private val shoppingCarts: List<ShoppingCart>): RecyclerView.A
         val productDescription: TextView = itemView.findViewById(R.id.tv_cart_description)
         val productDeliveryTime: TextView = itemView.findViewById(R.id.tv_product_delivery_time)
         val btnRemoveFromCart: Button = itemView.findViewById(R.id.btn_remove_from_cart)
+
+        init {
+            btnRemoveFromCart.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val shoppingCart = getShoppingCartObject(position)
+                    listener?.onRemoveButtonClick(shoppingCart.shoppingCartId)
+                }
+            }
+        }
+
+        private fun getShoppingCartObject(position: Int): ShoppingCart {
+            return shoppingCarts[position]
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
