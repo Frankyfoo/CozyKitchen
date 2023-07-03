@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.cozykitchen.api.KitchenApi
+import com.example.cozykitchen.chef.activity.AddShopActivity
 import com.example.cozykitchen.chef.activity.ChefMainActivity
 import com.example.cozykitchen.databinding.ActivityChefLoginBinding
 import com.example.cozykitchen.helper.ValidatorSingleton
@@ -84,10 +85,17 @@ class ChefLoginActivity : AppCompatActivity() {
                                     isLoggedIn = true
                                     Toast.makeText(this@ChefLoginActivity, "Login Successfully", Toast.LENGTH_SHORT).show()
                                     session.createLoginSession(chef.chefId, chef.chefEmail, chef.chefName, chef.chefPhoneNumber)
-//                                    Log.d("Testing", "${session.getCurrentUserId()}")
-                                    var intent = Intent(this@ChefLoginActivity, ChefMainActivity::class.java)
-                                    startActivity(intent)
-                                    finish()
+                                    if (chef.shopId.isNullOrEmpty()) {
+                                        var intent = Intent(this@ChefLoginActivity, AddShopActivity::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    }
+                                    else {
+                                        var intent = Intent(this@ChefLoginActivity, ChefMainActivity::class.java)
+                                        intent.putExtra("ShopId", chef.shopId)
+                                        startActivity(intent)
+                                        finish()
+                                    }
                                 }
                             }
                         }

@@ -31,6 +31,10 @@ interface ApiInterface {
     @GET("api/shop")
     fun getShops(): Call<List<Shop>>
 
+    @Headers("Content-Type: application/json")
+    @POST("api/shop")
+    fun addShop(@Body requestBody: RequestBody, @Header("chefId") chefId: String): Call<Shop>
+
     // Product API
     @GET("api/product/shop/{id}")
     fun getFoodByShopId(@Path("id") id: String): Call<List<Product>>
@@ -102,6 +106,9 @@ interface ApiInterface {
     // Chef API
     @GET("api/chef")
     fun getChefs(): Call<List<Chef>>
+
+    @GET("api/chef/{id}")
+    fun getChefById(@Path("id") id: String): Call<Chef>
 }
 
 object KitchenApi {

@@ -5,8 +5,7 @@ data class Shop(
     val shopName: String,
     val shopDescription: String,
     val shopImageUrl: String,
-    val chefId: String,
     val latitude: Double,
     val longitude: Double,
-    var distance: Float
+    var distance: Float?
 )

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "364385718215",
+    "project_id": "cozykitchen-8cadb",
+    "storage_bucket": "cozykitchen-8cadb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364385718215:android:6e1897a2c8a01aa4e413e2",
+        "android_client_info": {
+          "package_name": "com.example.cozykitchen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364385718215-lehvrmd31m30ja4aeeb9c3p49shfgdaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlPl2QYFicXX2HhbbSNPc8Wv-0FqkTxUQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364385718215-lehvrmd31m30ja4aeeb9c3p49shfgdaj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

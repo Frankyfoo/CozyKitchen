@@ -12,7 +12,7 @@ import com.example.cozykitchen.R
 import com.example.cozykitchen.model.Product
 import com.example.cozykitchen.ui.fragment.OnProductClickListener
 
-class ProductAdapter(private val products: List<Product>, private val listener: OnProductClickListener): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(private val products: List<Product>, private val listener: OnProductClickListener? = null): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     inner class ProductViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val foodCard: CardView = itemView.findViewById(R.id.cardFood)
@@ -25,7 +25,7 @@ class ProductAdapter(private val products: List<Product>, private val listener: 
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val product = getProductObject(position)
-                    listener.onItemClick(product)
+                    listener?.onItemClick(product)
                 }
             }
         }

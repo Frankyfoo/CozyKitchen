@@ -5,6 +5,7 @@ data class Chef(
     val chefName: String,
     val chefPassword: String,
     val chefEmail: String,
-    val chefPhoneNumber: String
+    val chefPhoneNumber: String,
+    val shopId: String?
 )
 
