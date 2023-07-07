@@ -63,5 +63,9 @@ class ProfileFragment : Fragment() {
         binding.btnManagePayment.setOnClickListener {
             findNavController().navigate(R.id.action_profile_fragment_to_cardListFragment)
         }
+
+        binding.btnManageWallet.setOnClickListener {
+            findNavController().navigate(R.id.action_profile_fragment_to_walletListFragment)
+        }
     }
 }

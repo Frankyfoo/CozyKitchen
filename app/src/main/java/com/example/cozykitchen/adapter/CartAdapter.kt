@@ -21,7 +21,6 @@ class CartAdapter(private val shoppingCarts: List<ShoppingCart>, private val lis
         val productQuantity: TextView = itemView.findViewById(R.id.tv_product_quantity)
         val productPrice: TextView = itemView.findViewById(R.id.tv_product_price)
         val productDescription: TextView = itemView.findViewById(R.id.tv_cart_description)
-        val productDeliveryTime: TextView = itemView.findViewById(R.id.tv_product_delivery_time)
         val btnRemoveFromCart: Button = itemView.findViewById(R.id.btn_remove_from_cart)
 
         init {
@@ -53,9 +52,8 @@ class CartAdapter(private val shoppingCarts: List<ShoppingCart>, private val lis
 
         if (currentCart.product != null) {
             holder.productName.text = currentCart.product.productName
-            holder.productSize.text = currentCart.size
+            holder.productSize.text = "Portion: "  + currentCart.size
             holder.productQuantity.text = "Qty: ${currentCart.quantityBought}"
-            holder.productDeliveryTime.text = "Delivery Time: \n" + currentCart.deliveryDateTimeString
 
             if (!currentCart.orderId.isNullOrEmpty() || currentCart.status == "PAY_COMPLETED") {
                 holder.btnRemoveFromCart.visibility = View.GONE
@@ -64,9 +62,9 @@ class CartAdapter(private val shoppingCarts: List<ShoppingCart>, private val lis
             }
 
             if (currentCart.size == "Large") {
-                holder.productPrice.text = "RM ${currentCart.product.productPrice + 2.00f}"
+                holder.productPrice.text = "RM ${String.format("%.2f", (currentCart.product.productPrice + 2.00f) * currentCart.quantityBought)}"
             } else {
-                holder.productPrice.text = "RM ${currentCart.product.productPrice}"
+                holder.productPrice.text = "RM ${String.format("%.2f", (currentCart.product.productPrice) * currentCart.quantityBought)}"
             }
 
             if (currentCart.customizationDescription.isNullOrEmpty()) {

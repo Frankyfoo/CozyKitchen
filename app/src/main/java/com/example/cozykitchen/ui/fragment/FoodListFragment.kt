@@ -1,7 +1,6 @@
 package com.example.cozykitchen.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +30,8 @@ class FoodListFragment : Fragment(), OnProductClickListener {
     private lateinit var binding: FragmentFoodListBinding
     private lateinit var adapter: ProductAdapter
 
+    private var shopId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -38,7 +39,7 @@ class FoodListFragment : Fragment(), OnProductClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // getting data from previous screen
-        val shopId = arguments?.getString("ShopId")
+        shopId = arguments?.getString("ShopId")
         val shopName = arguments?.getString("ShopName")
 
         // Set the title in the app bar
@@ -51,7 +52,7 @@ class FoodListFragment : Fragment(), OnProductClickListener {
 
         // Api Call and RecyclerView Populated
         if (shopId != null) {
-            KitchenApi.retrofitService.getFoodByShopId(shopId).enqueue(object: Callback<List<Product>?> {
+            KitchenApi.retrofitService.getFoodByShopId(shopId!!).enqueue(object: Callback<List<Product>?> {
                 override fun onResponse(
                     call: Call<List<Product>?>,
                     response: Response<List<Product>?>
@@ -90,6 +91,7 @@ class FoodListFragment : Fragment(), OnProductClickListener {
     override fun onItemClick(product: Product) {
         val bundle = Bundle()
         bundle.apply {
+            putString("ShopId", shopId)
             putString("ProductId", product.productId)
             putString("ProductName", product.productName)
         }

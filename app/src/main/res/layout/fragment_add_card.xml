@@ -24,7 +24,7 @@
             android:inputType="number"
             android:textSize="20sp"
             android:maxLength="16"
-            android:hint="1234 5678 1234 5678" />
+            android:hint="Exp: 1234 5678 1234 5678" />
 
         <TextView
             style="@style/TitleTextViewStyle"

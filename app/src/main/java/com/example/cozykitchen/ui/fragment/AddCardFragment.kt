@@ -53,7 +53,7 @@ class AddCardFragment : Fragment() {
         userId = session.getCurrentUserId()
 
         // Set the title in the app bar
-        (activity as AppCompatActivity).supportActionBar?.title = "Card"
+        (activity as AppCompatActivity).supportActionBar?.title = "Add Card"
 
         binding = FragmentAddCardBinding.inflate(inflater, container, false)
 

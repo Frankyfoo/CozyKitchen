@@ -39,6 +39,27 @@
                 android:textStyle="bold"
                 tools:text="Price: RM 12.3" />
 
+            <TextView
+                android:id="@+id/tv_order_remarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                tools:text="Remarks: Blue House" />
+
+            <TextView
+                android:id="@+id/tv_order_payment_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                tools:text="Paid with: Cash" />
+
+            <TextView
+                android:id="@+id/tv_order_delivery_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                tools:text="Time of delivery" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

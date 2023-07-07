@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cozykitchen.R
+import com.example.cozykitchen.chef.fragment.MenuFragment
 import com.example.cozykitchen.model.Product
 import com.example.cozykitchen.ui.fragment.OnProductClickListener
 
@@ -48,7 +49,8 @@ class ProductAdapter(private val products: List<Product>, private val listener: 
         val currentProduct = products[position]
 
         holder.foodName.text = currentProduct.productName
-        holder.foodPrice.text = "RM " + currentProduct.productPrice.toString()
+        holder.foodPrice.text = "RM " + String.format("%.2f", currentProduct.productPrice).toString()
+
 
         // if no image url is empty, show no image jpg
         if(currentProduct.productUrl.isNullOrEmpty()) {

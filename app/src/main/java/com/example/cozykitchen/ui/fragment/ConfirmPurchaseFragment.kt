@@ -2,6 +2,7 @@ package com.example.cozykitchen.ui.fragment
 
 import android.content.Context
 import android.media.Image
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.fragment.findNavController
@@ -17,9 +19,11 @@ import com.example.cozykitchen.R
 import com.example.cozykitchen.api.KitchenApi
 import com.example.cozykitchen.databinding.FragmentConfirmPurchaseBinding
 import com.example.cozykitchen.helper.RequestBodySingleton
+import com.example.cozykitchen.helper.TimeListGenerator
 import com.example.cozykitchen.model.Address
 import com.example.cozykitchen.model.Card
 import com.example.cozykitchen.model.Order
+import com.example.cozykitchen.model.Wallet
 import com.example.cozykitchen.request.PostOrder
 import com.example.cozykitchen.sharedPreference.LoginPreference
 import okhttp3.RequestBody
@@ -30,23 +34,30 @@ import retrofit2.Response
 class ConfirmPurchaseFragment : Fragment() {
 
     private lateinit var binding: FragmentConfirmPurchaseBinding
-//    private lateinit var session: LoginPreference
 
     private lateinit var imgBtnAddress: ImageButton
     private lateinit var imgBtnCard: ImageButton
+    private lateinit var imgBtnWallet: ImageButton
     private lateinit var spinnerAddress: Spinner
     private lateinit var spinnerCard: Spinner
+    private lateinit var spinnerWallet: Spinner
+    private lateinit var spinnerTime: Spinner
     private lateinit var btnConfirmPurchase: Button
+    private lateinit var radioGroupPayment: RadioGroup
+    private lateinit var etRemarks: EditText
 
     private var userId: String? = null
     private var totalCost: Float? = null
+    private var shopId: String? = null
     var cardList: MutableList<Card>? = null
     var addressList: MutableList<Address>? = null
+    var walletList: MutableList<Wallet>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,6 +66,7 @@ class ConfirmPurchaseFragment : Fragment() {
         // get UserId and TotalCost from previous screen
         userId = arguments?.getString("UserId")
         totalCost = arguments?.getFloat("TotalCost")
+        shopId = arguments?.getString("ShopId")
 
         // Set the title in the app bar
         (activity as AppCompatActivity).supportActionBar?.title = "Confirm"
@@ -63,9 +75,27 @@ class ConfirmPurchaseFragment : Fragment() {
 
         imgBtnAddress = binding.imgBtnEditAddress
         imgBtnCard = binding.imgBtnEditCard
+        imgBtnWallet = binding.imgBtnEditWallet
         spinnerAddress = binding.spinnerAddress
         spinnerCard = binding.spinnerCard
+        spinnerWallet = binding.spinnerWallet
+        spinnerTime = binding.spinnerTime
         btnConfirmPurchase = binding.btnConfirmPurchase
+        radioGroupPayment = binding.rgPaymentMethod
+        etRemarks = binding.etRemarks
+
+        // generate 3 days in advanced pre-ordering time
+        val timeListString: MutableList<String> = mutableListOf()
+        val timeList = TimeListGenerator().generateTimeList()
+
+        for (time in timeList) {
+            val timeString = time.text
+            timeListString.add(timeString)
+        }
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, timeListString)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTime.adapter = adapter
 
         // get Cards by UserID
         KitchenApi.retrofitService.getCardsByUserId(userId!!).enqueue(object: Callback<List<Card>>{
@@ -145,6 +175,43 @@ class ConfirmPurchaseFragment : Fragment() {
 
         })
 
+        // get Wallets by UserId
+        KitchenApi.retrofitService.getWalletsByUserId(userId!!).enqueue(object: Callback<List<Wallet>>{
+            override fun onResponse(call: Call<List<Wallet>>, response: Response<List<Wallet>>) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    if (body != null) {
+                        // create a new List of String to populate the spinner
+                        val walletNumberList: MutableList<String> = mutableListOf()
+
+                        // cast the response to global variable
+                        walletList = body.toMutableList()
+
+                        // add the each card number to List of String
+                        for (wallet in walletList!!) {
+                            walletNumberList.add(wallet.phoneNumber)
+                        }
+
+                        // populate the spinner with String list
+                        val spinnerWalletAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, walletNumberList)
+                        spinnerWalletAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinnerWallet.adapter = spinnerWalletAdapter
+                    } else {
+                        // Handle null body
+                        Log.d("API", "Response body is null")
+                    }
+                } else {
+                    // Handle unsuccessful response
+                    Log.d("API", "Unsuccessful response: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Wallet>>, t: Throwable) {
+                Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -154,6 +221,57 @@ class ConfirmPurchaseFragment : Fragment() {
 
         var addressId: String? = null
         var cardId: String? = null
+        var walletId: String? = null
+        var selectedTimeString = ""
+        var paymentType: String? = "CARD"
+        var selectedCard: Card? = null
+        var selectedWallet: Wallet? = null
+
+        radioGroupPayment.setOnCheckedChangeListener{ group, checkedId ->
+            when (checkedId) {
+                R.id.rb_card -> {
+                    binding.llCard.visibility = View.VISIBLE
+                    spinnerCard.visibility = View.VISIBLE
+                    binding.llWallet.visibility = View.GONE
+                    spinnerWallet.visibility = View.GONE
+                    paymentType = "CARD"
+//                    selectedCard = cardList?.get(spinnerCard.selectedItemPosition)
+                    selectedCard = if (spinnerCard.selectedItemPosition != AdapterView.INVALID_POSITION) {
+                        cardList?.get(spinnerCard.selectedItemPosition)
+                    } else {
+                        null
+                    }
+                    cardId = selectedCard?.cardId
+                    walletId = null
+                }
+                R.id.rb_wallet -> {
+                    binding.llCard.visibility = View.GONE
+                    spinnerCard.visibility = View.GONE
+                    binding.llWallet.visibility = View.VISIBLE
+                    spinnerWallet.visibility = View.VISIBLE
+                    paymentType = "WALLET"
+//                    selectedWallet = walletList?.get(spinnerWallet.selectedItemPosition)
+                    selectedWallet = if (spinnerWallet.selectedItemPosition != AdapterView.INVALID_POSITION) {
+                        walletList?.get(spinnerWallet.selectedItemPosition)
+                    } else {
+                        null
+                    }
+                    walletId = selectedWallet?.walletId
+                    cardId = null
+                }
+                R.id.rb_cash -> {
+                    binding.llCard.visibility = View.GONE
+                    spinnerCard.visibility = View.GONE
+                    binding.llWallet.visibility = View.GONE
+                    spinnerWallet.visibility = View.GONE
+                    paymentType = "CASH"
+                    selectedCard = null
+                    selectedWallet = null
+                    cardId = null
+                    walletId = null
+                }
+            }
+        }
 
         // go to card management
         imgBtnCard.setOnClickListener {
@@ -165,6 +283,23 @@ class ConfirmPurchaseFragment : Fragment() {
             findNavController().navigate(R.id.addressListFragment)
         }
 
+        // go to wallet management
+        imgBtnWallet.setOnClickListener {
+            findNavController().navigate(R.id.walletListFragment)
+        }
+
+        spinnerTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedTimeString = parent?.getItemAtPosition(position) as String
+//                Log.d("TestingSelected", "$selectedTimeString")
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle the case when nothing is selected (optional)
+                Log.d("TestingNotSelected", "No selection")
+            }
+        }
+
         // handle card dropdownlist
         spinnerCard.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -172,15 +307,15 @@ class ConfirmPurchaseFragment : Fragment() {
                 // get the card number showing in the spinner and remove the whitespace
                 var cardNumber = parent?.getItemAtPosition(position) as String
                 cardNumber = cardNumber.replace(" ", "")
-                Log.d("TestingCardNumber", "$cardNumber")
+//                Log.d("TestingCardNumber", "$cardNumber")
 
                 // find the card that has the same card number
                 var selectedCard = cardList!!.firstOrNull{ it.cardNumber == cardNumber}
 
                 // if found then get the card id
                 if (selectedCard != null) {
-                    cardId = selectedCard.cardId
-                    Log.d("TestingCardGet", "$cardId")
+                    cardId = selectedCard!!.cardId
+//                    Log.d("TestingCardGet", "$cardId")
                 }
 
             }
@@ -196,7 +331,7 @@ class ConfirmPurchaseFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 // get the Address Name showing in the spinner
                 var addressName = parent?.getItemAtPosition(position) as String
-                Log.d("TestingAddress", "$addressName")
+//                Log.d("TestingAddress", "$addressName")
 
                 // find the card that has the same card number
                 var selectedAddress = addressList!!.firstOrNull{ it.name == addressName}
@@ -204,7 +339,30 @@ class ConfirmPurchaseFragment : Fragment() {
                 // if found then get the address id
                 if (selectedAddress != null) {
                     addressId = selectedAddress.addressId
-                    Log.d("TestingAddress", "$addressId")
+//                    Log.d("TestingAddress", "$addressId")
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle the case when nothing is selected (optional)
+                Log.d("TestingNotSelected", "No selection")
+            }
+        }
+
+        // handle Wallet dropdownlist
+        spinnerWallet.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                // get the Wallet Phone Number showing in the spinner
+                var walletPhoneNumber = parent?.getItemAtPosition(position) as String
+//                Log.d("TestingAddress", "$walletPhoneNumber")
+
+                // find the card that has the same card number
+                var selectedWallet = walletList!!.firstOrNull{ it.phoneNumber == walletPhoneNumber}
+
+                // if found then get the address id
+                if (selectedWallet != null) {
+                    walletId = selectedWallet!!.walletId
+//                    Log.d("TestingWallet", "$walletId")
                 }
             }
 
@@ -215,14 +373,46 @@ class ConfirmPurchaseFragment : Fragment() {
         }
 
         btnConfirmPurchase.setOnClickListener {
-            if (cardId.isNullOrEmpty() || addressId.isNullOrEmpty()) {
-                Toast.makeText(requireContext(), "Please select a Card or an Address.", Toast.LENGTH_SHORT).show()
+//            if (cardId.isNullOrEmpty() || addressId.isNullOrEmpty()) {
+//                Toast.makeText(requireContext(), "Please select a Card or an Address.", Toast.LENGTH_SHORT).show()
+//            } else {
+//
+//                val order = PostOrder("test", totalCost!!, "PAY_COMPLETED", userId!!, addressId!!, cardId!!)
+//
+//                confirmPurchase(RequestBodySingleton.makeGSONRequestBody(order))
+//            }
+            if (paymentType == null || (paymentType == "CARD" && cardId.isNullOrEmpty()) || (paymentType == "WALLET" && walletId.isNullOrEmpty()) || addressId.isNullOrEmpty()) {
+                Toast.makeText(requireContext(), "Please select a valid payment option.", Toast.LENGTH_SHORT).show()
             } else {
-//                Toast.makeText(requireContext(), "$cardId, $addressId $userId $totalCost PAY_COMPLETED", Toast.LENGTH_SHORT).show()
 
-                val order = PostOrder("test", totalCost!!, "PAY_COMPLETED", userId!!, addressId!!, cardId!!)
+                val remarks = etRemarks.text.toString().trim()
+                var isNotValid = false
 
-                confirmPurchase(RequestBodySingleton.makeGSONRequestBody(order))
+                if (remarks.isEmpty()) {
+                    etRemarks.error = "Required Field."
+                    etRemarks.requestFocus()
+                    isNotValid = true
+                }
+
+                if (!isNotValid) {
+                    val order = PostOrder(
+                        "test",
+                        totalCost!!,
+                        "PAY_COMPLETED",
+                        userId!!,
+                        addressId!!,
+                        cardId,
+                        walletId,
+                        paymentType!!,
+                        remarks,
+                        selectedTimeString,
+                        shopId
+                    )
+                    Log.d("PostOrderTesting", "$order")
+                    confirmPurchase(RequestBodySingleton.makeGSONRequestBody(order))
+                }
+
+
             }
         }
 

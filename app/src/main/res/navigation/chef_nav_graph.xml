@@ -8,7 +8,11 @@
         android:id="@+id/menuFragment"
         android:name="com.example.cozykitchen.chef.fragment.MenuFragment"
         android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_manageFoodFragment"
+            app:destination="@id/manageFoodFragment" />
+    </fragment>
     <fragment
         android:id="@+id/chefProfileFragment"
         android:name="com.example.cozykitchen.chef.fragment.ChefProfileFragment"
@@ -19,4 +23,9 @@
         android:name="com.example.cozykitchen.chef.fragment.ChefHistoryFragment"
         android:label="fragment_chef_history"
         tools:layout="@layout/fragment_chef_history" />
+    <fragment
+        android:id="@+id/manageFoodFragment"
+        android:name="com.example.cozykitchen.chef.fragment.ManageFoodFragment"
+        android:label="fragment_manage_food"
+        tools:layout="@layout/fragment_manage_food" />
 </navigation>

@@ -2,11 +2,12 @@ package com.example.cozykitchen.model
 
 data class Product (
     val productId: String,
-    val productName: String,
-    val productDescription: String,
-    val productIngredients: String,
-    val productUrl: String,
-    val productPrice: Float,
+    var productName: String,
+    var productDescription: String,
+    var productIngredients: String,
+    var productUrl: String,
+    var productPrice: Float,
+    var productIsAvailable: Boolean,
     val shopId: String,
 )
 

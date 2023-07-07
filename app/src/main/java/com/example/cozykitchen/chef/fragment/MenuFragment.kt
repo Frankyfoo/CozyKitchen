@@ -1,16 +1,16 @@
 package com.example.cozykitchen.chef.fragment
 
 import android.content.Intent
-import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cozykitchen.R
@@ -21,16 +21,19 @@ import com.example.cozykitchen.databinding.FragmentMenuBinding
 import com.example.cozykitchen.model.Chef
 import com.example.cozykitchen.model.Product
 import com.example.cozykitchen.sharedPreference.LoginPreference
+import com.example.cozykitchen.ui.fragment.OnProductClickListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MenuFragment : Fragment() {
+class MenuFragment : Fragment(), OnProductClickListener {
 
     private lateinit var binding: FragmentMenuBinding
     private lateinit var session: LoginPreference
     private lateinit var adapter: ProductAdapter
     private lateinit var foodRecyclerView: RecyclerView
+    private lateinit var fabAddFood: FloatingActionButton
 
     private var shopAvailable: Boolean = false
     private var shopId: String? = null
@@ -47,6 +50,8 @@ class MenuFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title = "Menu"
 
         binding = FragmentMenuBinding.inflate(layoutInflater, container, false)
+        fabAddFood = binding.fabAddFood
+
         foodRecyclerView = binding.menuRecyclerView
         foodRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -75,12 +80,12 @@ class MenuFragment : Fragment() {
                                     val foods = response.body()
                                     if (!foods.isNullOrEmpty()) {
                                         binding.tvNoFood.visibility = View.GONE
-                                        adapter = ProductAdapter(foods)
+                                        adapter = ProductAdapter(foods, this@MenuFragment)
                                         foodRecyclerView.adapter = adapter
                                     } else {
                                         binding.tvNoFood.visibility = View.VISIBLE
                                     }
-                                    Log.d("Testing", "$foods")
+//                                    Log.d("Testing", "$foods")
                                 }
                             }
 
@@ -92,6 +97,7 @@ class MenuFragment : Fragment() {
                     } else {
                         // shows that chef has not created a shop yet
                         binding.tvNoShop.visibility = View.VISIBLE
+                        binding.fabAddFood.visibility = View.GONE
                         binding.tvNoShop.setOnClickListener {
                             val intent = Intent(requireContext(), AddShopActivity::class.java)
                             startActivity(intent)
@@ -112,6 +118,11 @@ class MenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Todo: Add FAB function to open new Fragment for add Food
+        fabAddFood.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("ShopId", shopId)
+            findNavController().navigate(R.id.action_menuFragment_to_manageFoodFragment, bundle)
+        }
 
         // Close the application when back button is pressed
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -120,5 +131,21 @@ class MenuFragment : Fragment() {
 
         // Hide the back button in the app bar
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
+    override fun onItemClick(product: Product) {
+//        Toast.makeText(requireContext(), "$product", Toast.LENGTH_SHORT).show()
+        val bundle = Bundle()
+        bundle.putBoolean("IsCardClick", true)
+        bundle.putString("ProductId", product.productId)
+//        bundle.putString("ProductId", product.productId)
+//        bundle.putString("ProductName", product.productName)
+//        bundle.putString("ProductDescription", product.productDescription)
+//        bundle.putString("ProductUrl", product.productUrl)
+//        bundle.putFloat("ProductPrice", product.productPrice)
+//        bundle.putBoolean("ProductIsAvailable", product.productIsAvailable)
+//        bundle.putString("ProductIngredients", product.productIngredients)
+//        bundle.putString("ProductShopId", product.shopId)
+        findNavController().navigate(R.id.action_menuFragment_to_manageFoodFragment, bundle)
     }
 }

@@ -16,6 +16,9 @@ class OrderAdapter(private val orders: List<Order>, private val listener: OnOrde
     inner class OrderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val tvOrderId: TextView = itemView.findViewById(R.id.tv_order_title)
         val tvOrderPrice: TextView = itemView.findViewById(R.id.tv_order_price)
+        val tvRemarks: TextView = itemView.findViewById(R.id.tv_order_remarks)
+        val tvPaymentType: TextView = itemView.findViewById(R.id.tv_order_payment_type)
+        val tvDeliveryTime: TextView = itemView.findViewById(R.id.tv_order_delivery_time)
         val cardOrder: CardView = itemView.findViewById(R.id.cardOrder)
 
         init {
@@ -46,6 +49,9 @@ class OrderAdapter(private val orders: List<Order>, private val listener: OnOrde
         val currentOrder = orders[position]
 
         holder.tvOrderId.text = currentOrder.orderId
-        holder.tvOrderPrice.text = "Total Cost: RM " + currentOrder.totalPrice.toString()
+        holder.tvRemarks.text = "Remarks: " + currentOrder.remarks
+        holder.tvPaymentType.text = "Paid with: " + currentOrder.paymentType
+        holder.tvDeliveryTime.text = "Delivery Time: " + currentOrder.deliveryDateTimeString
+        holder.tvOrderPrice.text = "Total Cost: RM " + (currentOrder.totalPrice + 3.0f).toString()
     }
 }

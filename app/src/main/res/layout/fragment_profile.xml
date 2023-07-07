@@ -28,7 +28,13 @@
             android:id="@+id/btn_manage_payment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Manage payment method" />
+            android:text="Manage card payment" />
+
+        <Button
+            android:id="@+id/btn_manage_wallet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage E-Wallet Payment" />
 
         <Button
             android:id="@+id/btn_logout"

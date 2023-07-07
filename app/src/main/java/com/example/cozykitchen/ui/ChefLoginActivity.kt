@@ -86,7 +86,7 @@ class ChefLoginActivity : AppCompatActivity() {
                                     Toast.makeText(this@ChefLoginActivity, "Login Successfully", Toast.LENGTH_SHORT).show()
                                     session.createLoginSession(chef.chefId, chef.chefEmail, chef.chefName, chef.chefPhoneNumber)
                                     if (chef.shopId.isNullOrEmpty()) {
-                                        var intent = Intent(this@ChefLoginActivity, AddShopActivity::class.java)
+                                        var intent = Intent(this@ChefLoginActivity, ChefMainActivity::class.java)
                                         startActivity(intent)
                                         finish()
                                     }

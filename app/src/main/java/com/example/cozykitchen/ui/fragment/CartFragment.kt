@@ -43,6 +43,7 @@ class CartFragment : Fragment(), OnCartClickListener {
     private var totalCost: Float = 0.0f
     private var deliveryCost: Float = 3.0f
     private var shoppingCartList: MutableList<ShoppingCart>? = null
+    private var shopId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,8 +78,13 @@ class CartFragment : Fragment(), OnCartClickListener {
                     response: Response<List<ShoppingCart>>
                 ) {
                     shoppingCartList = response.body() as MutableList<ShoppingCart>?
+
 //                    Log.d("CartTesting", shoppingCartList.toString())
                     if (shoppingCartList != null && shoppingCartList!!.isNotEmpty()) {
+                        for(shoppingCart in shoppingCartList!!) {
+                            shopId = shoppingCart.product?.shopId
+                        }
+
                         adapter = CartAdapter(shoppingCartList!!, this@CartFragment)
                         cartRecyclerView.adapter = adapter
 
@@ -134,6 +140,7 @@ class CartFragment : Fragment(), OnCartClickListener {
             val bundle = Bundle()
             bundle.putFloat("TotalCost", String.format("%.2f", totalCost).toFloat())
             bundle.putString("UserId", session.getCurrentUserId())
+            bundle.putString("ShopId", shopId)
 
             findNavController().navigate(R.id.action_cart_fragment_to_confirmPurchaseFragment, bundle)
         }
@@ -152,6 +159,15 @@ class CartFragment : Fragment(), OnCartClickListener {
                     // Notify the adapter that the data set has changed
                     adapter.notifyDataSetChanged()
                     Toast.makeText(requireContext(), "Deleted Successfully.", Toast.LENGTH_SHORT).show()
+
+                    // Recalculate the total cost
+                    calculateTotalCost()
+
+                    // Show/hide the appropriate views based on the shopping cart list
+                    handleEmptyCart()
+
+                    // Update the price and total cost
+                    updatePriceAndTotalCost()
 
                     // show no shopping cart item found text
                     if (shoppingCartList.isNullOrEmpty()) {
@@ -175,5 +191,35 @@ class CartFragment : Fragment(), OnCartClickListener {
             }
         }
         return null
+    }
+
+    private fun calculateTotalCost() {
+        totalCost = 0.0f
+
+        for (shoppingCart in shoppingCartList!!) {
+            if (shoppingCart.size == "Large") {
+                val price = (shoppingCart.product!!.productPrice + 2.00f) * shoppingCart.quantityBought
+                totalCost += price
+            } else {
+                val price = shoppingCart.product!!.productPrice * shoppingCart.quantityBought
+                totalCost += price
+            }
+        }
+    }
+
+    private fun handleEmptyCart() {
+        if (shoppingCartList.isNullOrEmpty()) {
+            binding.tvNoCartItemFound.visibility = View.VISIBLE
+            binding.linearLayoutBottom.visibility = View.GONE
+        }
+    }
+
+    private fun updatePriceAndTotalCost() {
+        // Calculate the final total cost (including delivery cost)
+        val finalTotalCost = totalCost + deliveryCost
+
+        // Update the price and total cost TextViews
+        binding.tvCost.text = "Cost: RM ${String.format("%.2f", totalCost)}"
+        binding.tvTotalCost.text = "Total Cost: RM ${String.format("%.2f", finalTotalCost)}"
     }
 }

@@ -42,6 +42,17 @@ interface ApiInterface {
     @GET("api/product/{id}")
     fun getFoodById(@Path("id") id: String): Call<Product>
 
+    @Headers("Content-Type: application/json")
+    @PUT("api/product/{id}")
+    fun updateFood(@Path("id") id: String, @Body requestBody: RequestBody): Call <Product>
+
+    @DELETE("api/product/{id}")
+    fun deleteFood(@Path("id") id: String): Call<Product>
+
+    @Headers("Content-Type: application/json")
+    @POST("api/product")
+    fun addFood(@Body requestBody: RequestBody): Call<Product>
+
     // ShoopingCart API
     @Headers("Content-Type: application/json")
     @POST("api/shoppingcart")
@@ -73,6 +84,20 @@ interface ApiInterface {
 
     @DELETE("api/address/{id}")
     fun deleteAddress(@Path("id") id: String): Call<Address>
+
+    // Wallet API
+    @GET("api/wallet/getwalletsbyuserid/{userId}")
+    fun getWalletsByUserId(@Path("userId") userId: String): Call<List<Wallet>>
+
+    @GET("api/wallet/{id}")
+    fun getWalletById(@Path("id") id: String): Call<Wallet>
+
+    @Headers("Content-Type: application/json")
+    @POST("api/wallet")
+    fun addNewWallet(@Body requestBody: RequestBody): Call<Wallet>
+
+    @DELETE("api/wallet/{id}")
+    fun deleteWallet(@Path("id") id: String): Call<Wallet>
 
     // Card API
     @Headers("Content-Type: application/json")
