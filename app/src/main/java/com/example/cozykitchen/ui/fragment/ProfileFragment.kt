@@ -56,6 +56,10 @@ class ProfileFragment : Fragment() {
             session.LogoutUser()
         }
 
+        binding.btnEditProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_profile_fragment_to_editProfileFragment)
+        }
+
         binding.btnManageAddress.setOnClickListener {
             findNavController().navigate(R.id.action_profile_fragment_to_addressListFragment)
         }

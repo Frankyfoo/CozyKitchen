@@ -23,13 +23,23 @@ interface ApiInterface {
     @GET("api/user")
     fun getUsers(): Call<List<User>>
 
+    @GET("api/user/{id}")
+    fun getUserById(@Path("id") id: String): Call<User>
+
     @Headers("Content-Type: application/json")
     @POST("api/user")
     fun createUser(@Body requestBody: RequestBody): Call<User>
 
+    @Headers("Content-Type: application/json")
+    @PUT("api/user/{id}")
+    fun updateUser(@Path("id") id: String, @Body requestBody: RequestBody): Call<User>
+
     // Shop API
     @GET("api/shop")
     fun getShops(): Call<List<Shop>>
+
+    @GET("api/shop/{id}")
+    fun getShopById(@Path("id") id: String): Call<Shop>
 
     @Headers("Content-Type: application/json")
     @POST("api/shop")
@@ -124,9 +134,20 @@ interface ApiInterface {
     @GET("api/order/OrdersbyUserId/{userId}")
     fun getOrdersByUserId(@Path("userId") userId: String): Call<List<Order>>
 
+    @GET("api/order/OrdersbyShopId/{shopId}")
+    fun getOrdersByShopId(@Path("shopId") shopId: String): Call<List<Order>>
+
     @Headers("Content-Type: application/json")
     @POST("api/order")
     fun addOrder(@Body requestBody: RequestBody): Call<PostOrder>
+
+    @Headers("Content-Type: application/json")
+    @PUT("api/order/deleteorderbyOrderId/{orderid}")
+    fun deleteOrderByOrderId(@Path("orderid") orderId : String): Call<Order>
+
+    @Headers("Content-Type: application/json")
+    @PUT("api/order/updateorderbyOrderId/{orderId}")
+    fun updateOrderByOrderId(@Path("orderId") orderId : String): Call<Order>
 
     // Chef API
     @GET("api/chef")
@@ -134,6 +155,13 @@ interface ApiInterface {
 
     @GET("api/chef/{id}")
     fun getChefById(@Path("id") id: String): Call<Chef>
+
+    @GET("api/chef/getChefbyShopId/{shopId}")
+    fun getChefByShopId(@Path("shopId") shopId: String): Call<Chef>
+
+    @Headers("Content-Type: application/json")
+    @PUT("api/chef/{id}")
+    fun updateChef(@Path("id") id: String, @Body requestBody: RequestBody): Call<Chef>
 }
 
 object KitchenApi {

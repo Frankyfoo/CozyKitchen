@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -27,10 +28,6 @@ class ChefMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChefMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //get Shop Id
-        val shopId = intent.getStringExtra("ShopId")
-//        Log.d("Testing", "$shopId")
 
         // start of setting up navigation
         bottomNavigationView = binding.chefBottomNavBar

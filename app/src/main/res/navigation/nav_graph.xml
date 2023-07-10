@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_profile_fragment_to_walletListFragment"
             app:destination="@id/walletListFragment" />
+        <action
+            android:id="@+id/action_profile_fragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/foodListFragment"
@@ -119,6 +122,11 @@
         android:name="com.example.cozykitchen.ui.fragment.AddWalletFragment"
         android:label="fragment_add_wallet"
         tools:layout="@layout/fragment_add_wallet" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.cozykitchen.ui.fragment.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
 
 
 </navigation>

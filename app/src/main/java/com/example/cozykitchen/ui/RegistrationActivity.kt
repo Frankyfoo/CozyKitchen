@@ -3,6 +3,7 @@ package com.example.cozykitchen.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.widget.Toast
 import com.example.cozykitchen.api.KitchenApi
@@ -18,8 +19,6 @@ import retrofit2.Response
 
 class RegistrationActivity : AppCompatActivity() {
 
-
-
     private lateinit var binding : ActivityRegistrationBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +27,17 @@ class RegistrationActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+        // makes password visible and invisible
+        binding.cbShowPassword.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // Show the password
+                binding.etPassword.transformationMethod = null
+            } else {
+                // Hide the password
+                binding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
 
         binding.tvLogin.setOnClickListener {
             toLoginActivity()
@@ -37,6 +46,8 @@ class RegistrationActivity : AppCompatActivity() {
         binding.btnRegister.setOnClickListener {
             registerNewUser()
         }
+
+        setContentView(binding.root)
     }
 
     private fun registerNewUser() {
@@ -61,7 +72,7 @@ class RegistrationActivity : AppCompatActivity() {
             binding.etPassword.error = "Password required"
             binding.etPassword.requestFocus()
             isNotValid = true
-        } else if (!ValidatorSingleton.isValidPasswordLength(password)){
+        } else if (!ValidatorSingleton.isValidPasswordLength(password)) {
             binding.etPassword.error = "Minimal 8 character needed"
             binding.etPassword.requestFocus()
             isNotValid = true
@@ -75,6 +86,10 @@ class RegistrationActivity : AppCompatActivity() {
 
         if (phoneNumber.isEmpty()) {
             binding.etPhoneNumber.error = "Mobile number required"
+            binding.etPhoneNumber.requestFocus()
+            isNotValid = true
+        } else if (!ValidatorSingleton.isValidMalaysiaPhoneNumber(phoneNumber)) {
+            binding.etPhoneNumber.error = "Invalid malaysia number"
             binding.etPhoneNumber.requestFocus()
             isNotValid = true
         }

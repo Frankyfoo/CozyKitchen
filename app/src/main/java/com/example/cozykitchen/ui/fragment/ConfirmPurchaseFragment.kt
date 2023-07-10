@@ -408,7 +408,7 @@ class ConfirmPurchaseFragment : Fragment() {
                         selectedTimeString,
                         shopId
                     )
-                    Log.d("PostOrderTesting", "$order")
+//                    Log.d("PostOrderTesting", "$order")
                     confirmPurchase(RequestBodySingleton.makeGSONRequestBody(order))
                 }
 

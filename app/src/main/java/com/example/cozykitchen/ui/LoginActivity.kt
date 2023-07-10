@@ -3,6 +3,7 @@ package com.example.cozykitchen.ui
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -48,11 +49,22 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, ChefMainActivity::class.java)
             startActivity(intent)
         } else {
+
             // hide action bar
             supportActionBar?.hide()
 
             binding = ActivityLoginBinding.inflate(layoutInflater)
-            setContentView(binding.root)
+
+            // makes password visible and invisible
+            binding.cbShowPassword.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    // Show the password
+                    binding.etPassword.transformationMethod = null
+                } else {
+                    // Hide the password
+                    binding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                }
+            }
 
             binding.tvRegister.setOnClickListener {
                 toRegisterActivity()
@@ -65,6 +77,8 @@ class LoginActivity : AppCompatActivity() {
             binding.btnLogin.setOnClickListener {
                 login()
             }
+
+            setContentView(binding.root)
         }
 
         // Close the application when back button is pressed

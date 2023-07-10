@@ -60,6 +60,15 @@
                 android:layout_marginTop="10dp"
                 tools:text="Time of delivery" />
 
+            <TextView
+                android:id="@+id/tv_order_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                tools:text="Status = Paid" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

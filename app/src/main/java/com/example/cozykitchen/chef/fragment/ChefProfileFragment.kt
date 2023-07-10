@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import com.example.cozykitchen.R
 import com.example.cozykitchen.databinding.FragmentChefProfileBinding
 import com.example.cozykitchen.sharedPreference.LoginPreference
@@ -44,6 +45,10 @@ class ChefProfileFragment : Fragment() {
 
         // Hide the back button in the app bar
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+        binding.btnEditProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_chefProfileFragment_to_chefEditProfileFragment)
+        }
 
         // logs out user
         binding.btnChefLogout.setOnClickListener {

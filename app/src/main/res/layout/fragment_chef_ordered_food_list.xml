@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.OrderedFoodList">
+    tools:context=".chef.fragment.ChefOrderedFoodListFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,22 +24,29 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/btn_shop_info"
+                android:id="@+id/btn_customer_information"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
-                android:text="Shop Info" />
+                android:layout_height="wrap_content"
+                android:text="Customer Info" />
+
+            <Button
+                android:id="@+id/btn_update_order"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="12dp"
+                android:layout_height="wrap_content"
+                android:text="Update\nOrder" />
 
             <Button
                 android:id="@+id/btn_delete_order"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Cancel Order" />
+                android:text="Delete\nOrder" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 

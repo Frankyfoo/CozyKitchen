@@ -13,10 +13,10 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btn_manage_profile"
+            android:id="@+id/btn_edit_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Manage Profile" />
+            android:text="Edit Profile" />
 
         <Button
             android:id="@+id/btn_manage_address"

@@ -29,19 +29,46 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                style="@style/TitleTextViewStyle"
+                android:text="Shop name" />
+
             <EditText
                 android:id="@+id/et_shop_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/EditTextStyle"
-                android:hint="Shop Name" />
+                android:hint="Exp: Max's Kitchen" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                style="@style/TitleTextViewStyle"
+                android:text="Shop description" />
 
             <EditText
                 android:id="@+id/et_shop_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/EditTextStyle"
-                android:hint="Description" />
+                android:hint="Exp: Kitchen started by Max" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                style="@style/TitleTextViewStyle"
+                android:text="Shop image" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:text="Note: Landscape image is preferable." />
 
             <ImageView
                 android:id="@+id/img_shop"

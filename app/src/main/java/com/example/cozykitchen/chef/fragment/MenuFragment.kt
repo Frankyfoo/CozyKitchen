@@ -134,18 +134,9 @@ class MenuFragment : Fragment(), OnProductClickListener {
     }
 
     override fun onItemClick(product: Product) {
-//        Toast.makeText(requireContext(), "$product", Toast.LENGTH_SHORT).show()
         val bundle = Bundle()
         bundle.putBoolean("IsCardClick", true)
         bundle.putString("ProductId", product.productId)
-//        bundle.putString("ProductId", product.productId)
-//        bundle.putString("ProductName", product.productName)
-//        bundle.putString("ProductDescription", product.productDescription)
-//        bundle.putString("ProductUrl", product.productUrl)
-//        bundle.putFloat("ProductPrice", product.productPrice)
-//        bundle.putBoolean("ProductIsAvailable", product.productIsAvailable)
-//        bundle.putString("ProductIngredients", product.productIngredients)
-//        bundle.putString("ProductShopId", product.shopId)
         findNavController().navigate(R.id.action_menuFragment_to_manageFoodFragment, bundle)
     }
 }

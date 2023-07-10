@@ -10,6 +10,7 @@ import android.view.*
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -44,6 +45,7 @@ class ShopFragment : Fragment(), OnShopClickListener {
     private lateinit var shopRecyclerView: RecyclerView
 
     private var userLocation: LatLng? = null
+    private var onBackPressedCallback: OnBackPressedCallback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,8 +95,27 @@ class ShopFragment : Fragment(), OnShopClickListener {
                 // sort the Shops List by distance
                 shops?.sortBy { it.distance }
 
-                adapter = shops?.let { ShopAdapter(it, this@ShopFragment) }!!
-                shopRecyclerView.adapter = adapter
+                requireActivity().runOnUiThread {
+                    adapter = shops?.let { ShopAdapter(it, this@ShopFragment) }!!
+                    shopRecyclerView.adapter = adapter
+                }
+
+                // Todo: Code below show all shops sort to nearest by 5km
+                // Filter the shops based on the distance less than 5 km
+//                val filteredShops = shops?.filter { it.distance!! < 5f }
+
+                // Sort the filtered shops list by distance
+//                val sortedShops = filteredShops?.sortedBy { it.distance }
+
+                // only run the adapter after the distance has been calculated
+//                requireActivity().runOnUiThread {
+//                    // Create a new adapter with the updated shops list
+//                    val updatedAdapter = sortedShops?.let { ShopAdapter(it, this@ShopFragment) }
+//                    shopRecyclerView.adapter = updatedAdapter
+//
+//                    // Notify the adapter that the data set has changed
+//                    updatedAdapter?.notifyDataSetChanged()
+//                }
             }
 
             override fun onFailure(call: Call<List<Shop>?>, t: Throwable) {

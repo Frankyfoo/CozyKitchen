@@ -32,12 +32,26 @@
                 android:layout_gravity="center"
                 android:text="Upload image" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                style="@style/TitleTextViewStyle"
+                android:text="Food name" />
+
             <EditText
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/EditTextStyle"
-                android:hint="Name" />
+                android:hint="Exp: Fried noodles" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                style="@style/TitleTextViewStyle"
+                android:text="Price" />
 
             <EditText
                 android:id="@+id/et_price"
@@ -47,6 +61,13 @@
                 android:inputType="numberDecimal"
                 android:hint="Exp: 5.99" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                style="@style/TitleTextViewStyle"
+                android:text="Food description" />
+
             <EditText
                 android:id="@+id/et_description"
                 android:layout_width="match_parent"
@@ -55,7 +76,14 @@
                 android:inputType="textMultiLine"
                 android:lines="4"
                 android:gravity="top|start"
-                android:hint="Description" />
+                android:hint="Exp: Noodles that are fried" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                style="@style/TitleTextViewStyle"
+                android:text="Ingredients involved" />
 
             <EditText
                 android:id="@+id/et_ingredients"
@@ -65,7 +93,7 @@
                 android:inputType="textMultiLine"
                 android:lines="4"
                 android:gravity="top|start"
-                android:hint="Ingredients used." />
+                android:hint="Exp: Noodles, oil" />
 
             <LinearLayout
                 android:layout_width="match_parent"

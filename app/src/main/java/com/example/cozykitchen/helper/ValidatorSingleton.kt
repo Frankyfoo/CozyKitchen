@@ -6,6 +6,7 @@ import java.util.regex.Pattern
 
 object ValidatorSingleton {
     private val emailPattern: Pattern = Pattern.compile("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+    private val malaysiaPhoneNumberPattern: Pattern = Pattern.compile("^(?:\\+?6?01)[0-46-9]-*[0-9]{7,8}$")
     private val minLengthPattern: Pattern = Pattern.compile("^.{8,}$")
     private val minCardLengthPattern: Pattern = Pattern.compile("^.{16}$")
     private val minCvcLengthPattern: Pattern = Pattern.compile("^.{3}$")
@@ -28,5 +29,10 @@ object ValidatorSingleton {
     fun isValidCvcCodeLength(cvc: String): Boolean {
         val cvcCodeLengthChecker: Matcher = minCvcLengthPattern.matcher(cvc)
         return cvcCodeLengthChecker.matches()
+    }
+
+    fun isValidMalaysiaPhoneNumber(phoneNumber: String): Boolean {
+        val phoneNumberChecker: Matcher = malaysiaPhoneNumberPattern.matcher(phoneNumber)
+        return phoneNumberChecker.matches()
     }
 }

@@ -3,12 +3,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".chef.fragment.ChefHistoryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="History" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="12dp" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TitleTextViewStyle"
+                android:text="Select time range: " />
+
+            <Button
+                android:id="@+id/btn_time_range"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select time range" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="12dp" >
+
+            <TextView
+                android:id="@+id/tv_no_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No History Found"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_order_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_order" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

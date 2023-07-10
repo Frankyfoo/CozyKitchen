@@ -17,15 +17,33 @@
         android:id="@+id/chefProfileFragment"
         android:name="com.example.cozykitchen.chef.fragment.ChefProfileFragment"
         android:label="fragment_chef_profile"
-        tools:layout="@layout/fragment_chef_profile" />
+        tools:layout="@layout/fragment_chef_profile" >
+        <action
+            android:id="@+id/action_chefProfileFragment_to_chefEditProfileFragment"
+            app:destination="@id/chefEditProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/chefHistoryFragment"
         android:name="com.example.cozykitchen.chef.fragment.ChefHistoryFragment"
         android:label="fragment_chef_history"
-        tools:layout="@layout/fragment_chef_history" />
+        tools:layout="@layout/fragment_chef_history" >
+        <action
+            android:id="@+id/action_chefHistoryFragment_to_chefOrderedFoodListFragment"
+            app:destination="@id/chefOrderedFoodListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/manageFoodFragment"
         android:name="com.example.cozykitchen.chef.fragment.ManageFoodFragment"
         android:label="fragment_manage_food"
         tools:layout="@layout/fragment_manage_food" />
+    <fragment
+        android:id="@+id/chefOrderedFoodListFragment"
+        android:name="com.example.cozykitchen.chef.fragment.ChefOrderedFoodListFragment"
+        android:label="fragment_chef_ordered_food_list"
+        tools:layout="@layout/fragment_chef_ordered_food_list" />
+    <fragment
+        android:id="@+id/chefEditProfileFragment"
+        android:name="com.example.cozykitchen.chef.fragment.ChefEditProfileFragment"
+        android:label="fragment_chef_edit_profile"
+        tools:layout="@layout/fragment_chef_edit_profile" />
 </navigation>

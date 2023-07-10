@@ -3,6 +3,7 @@ package com.example.cozykitchen.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.widget.Toast
 import com.example.cozykitchen.api.KitchenApi
@@ -37,7 +38,17 @@ class ChefLoginActivity : AppCompatActivity() {
             supportActionBar?.hide()
 
             binding = ActivityChefLoginBinding.inflate(layoutInflater)
-            setContentView(binding.root)
+
+            // makes password visible and invisible
+            binding.cbShowPassword.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    // Show the password
+                    binding.etPassword.transformationMethod = null
+                } else {
+                    // Hide the password
+                    binding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                }
+            }
 
             binding.tvToCustomerLogin.setOnClickListener {
                 toCustomerLoginActivity()
@@ -46,6 +57,8 @@ class ChefLoginActivity : AppCompatActivity() {
             binding.btnLogin.setOnClickListener {
                 login()
             }
+
+            setContentView(binding.root)
         }
     }
 
