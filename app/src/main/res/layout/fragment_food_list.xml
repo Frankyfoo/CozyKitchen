@@ -6,30 +6,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.FoodListFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/foodRecyclerView"
+        <EditText
+            android:id="@+id/et_search_food"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_food" />
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/baseline_search_24"
+            android:padding="12dp"
+            style="@style/EditTextStyle"
+            android:hint="search for food." />
 
         <TextView
             android:id="@+id/noProductsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No products found."
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/foodRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_food" />
+
+    </LinearLayout>
 
 </FrameLayout>

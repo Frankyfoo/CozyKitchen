@@ -6,28 +6,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".chef.fragment.MenuFragment">
 
-    <TextView
-        android:id="@+id/tv_no_food"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No food has been added."
-        android:visibility="gone"
-        android:layout_gravity="center" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/menu_recycler_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_food"/>
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/tv_no_shop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="You have not created a shop yet.\nClick here to create one."
-        android:visibility="gone"
-        android:layout_gravity="center" />
+        <EditText
+            android:id="@+id/et_search_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/baseline_search_24"
+            android:padding="12dp"
+            style="@style/EditTextStyle"
+            android:hint="search for menu." />
+
+        <TextView
+            android:id="@+id/tv_no_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No food has been added."
+            android:visibility="gone"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/tv_no_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You have not created a shop yet.\nClick here to create one."
+            android:textColor="@color/teal_700"
+            android:visibility="gone"
+            android:layout_gravity="center" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/menu_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_food"/>
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_food"

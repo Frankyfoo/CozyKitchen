@@ -1,5 +1,6 @@
 package com.example.cozykitchen.ui.fragment
 
+import android.Manifest
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,7 +12,9 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.findNavController
 import com.example.cozykitchen.R
 import com.example.cozykitchen.api.KitchenApi
@@ -141,11 +144,22 @@ class AddressFragment : Fragment(), OnMarkerDragListener {
             // it will not affect the id generated as the id generation is done
             // in the backend
             if(!isNotValid) {
-                val address = PostAddress(
-                    "test", streetName, street, streetNumber, postalCode, latitude, longitude, instruction, userId
-                )
+                if (latitude == 0.0 || longitude == 0.0 || street.isNullOrEmpty()) {
+                    val alertDialogBuilder = AlertDialog.Builder(requireContext())
+                    alertDialogBuilder.setTitle("Unable to find your location.")
+                    alertDialogBuilder.setMessage("Make sure location access is granted.")
+                    alertDialogBuilder.setPositiveButton("OK") { dialog, which ->
+                        dialog.dismiss()
+                    }
+                    val alertDialog = alertDialogBuilder.create()
+                    alertDialog.show()
+                } else {
+                    val address = PostAddress(
+                        "test", streetName, street, streetNumber, postalCode, latitude, longitude, instruction, userId
+                    )
 
-                addAddress(RequestBodySingleton.makeGSONRequestBody(address))
+                    addAddress(RequestBodySingleton.makeGSONRequestBody(address))
+                }
             }
         }
     }

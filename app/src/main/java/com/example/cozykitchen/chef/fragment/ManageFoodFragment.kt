@@ -32,6 +32,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -388,11 +388,11 @@ class ConfirmPurchaseFragment : Fragment() {
                 val remarks = etRemarks.text.toString().trim()
                 var isNotValid = false
 
-                if (remarks.isEmpty()) {
-                    etRemarks.error = "Required Field."
-                    etRemarks.requestFocus()
-                    isNotValid = true
-                }
+//                if (remarks.isEmpty()) {
+//                    etRemarks.error = "Required Field."
+//                    etRemarks.requestFocus()
+//                    isNotValid = true
+//                }
 
                 if (!isNotValid) {
                     val order = PostOrder(

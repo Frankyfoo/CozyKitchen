@@ -1,9 +1,12 @@
 package com.example.cozykitchen.ui.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -29,8 +32,13 @@ class FoodListFragment : Fragment(), OnProductClickListener {
 
     private lateinit var binding: FragmentFoodListBinding
     private lateinit var adapter: ProductAdapter
+    private lateinit var etSearchFood: EditText
 
     private var shopId: String? = null
+
+    private var searchQuery: String = ""
+    private var products: MutableList<Product>? = mutableListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +58,31 @@ class FoodListFragment : Fragment(), OnProductClickListener {
         val foodRecyclerView: RecyclerView = binding.foodRecyclerView
         foodRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        etSearchFood = binding.etSearchFood
+        etSearchFood.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not used
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Update the search query
+                searchQuery = s.toString().trim()
+
+                // Filter the products based on the search query
+                val filteredProducts = filterProducts(searchQuery)
+
+                // Update the adapter with the filtered products
+                adapter.updateProductList(filteredProducts, searchQuery)
+
+                // Show/hide the "No Products" text based on the filtered products
+                binding.noProductsTextView.visibility = if (filteredProducts.isEmpty()) View.VISIBLE else View.GONE
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Not used
+            }
+        })
+
         // Api Call and RecyclerView Populated
         if (shopId != null) {
             KitchenApi.retrofitService.getFoodByShopId(shopId!!).enqueue(object: Callback<List<Product>?> {
@@ -57,14 +90,16 @@ class FoodListFragment : Fragment(), OnProductClickListener {
                     call: Call<List<Product>?>,
                     response: Response<List<Product>?>
                 ) {
-                    val products = response.body()
+                    products = response.body() as MutableList<Product>?
 
-                    if (products != null && products.isNotEmpty()) {
-                        adapter = ProductAdapter(products, this@FoodListFragment)
-                        foodRecyclerView.adapter = adapter
+                    if (products != null && products!!.isNotEmpty()) {
                         binding.noProductsTextView.visibility = View.GONE
+                        binding.etSearchFood.visibility = View.VISIBLE
+                        adapter = ProductAdapter(products!!, this@FoodListFragment)
+                        foodRecyclerView.adapter = adapter
                     } else {
                         binding.noProductsTextView.visibility = View.VISIBLE
+                        binding.etSearchFood.visibility = View.GONE
                     }
                 }
 
@@ -77,6 +112,13 @@ class FoodListFragment : Fragment(), OnProductClickListener {
 
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    private fun filterProducts(query: String): List<Product> {
+        // Filter the shops based on the search query
+        return products?.filter { product ->
+            product.productName.contains(query, ignoreCase = true)
+        } ?: emptyList()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

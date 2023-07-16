@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_chefProfileFragment_to_chefEditProfileFragment"
             app:destination="@id/chefEditProfileFragment" />
+        <action
+            android:id="@+id/action_chefProfileFragment_to_editShopFragment"
+            app:destination="@id/editShopFragment" />
     </fragment>
     <fragment
         android:id="@+id/chefHistoryFragment"
@@ -46,4 +49,9 @@
         android:name="com.example.cozykitchen.chef.fragment.ChefEditProfileFragment"
         android:label="fragment_chef_edit_profile"
         tools:layout="@layout/fragment_chef_edit_profile" />
+    <fragment
+        android:id="@+id/editShopFragment"
+        android:name="com.example.cozykitchen.chef.fragment.EditShopFragment"
+        android:label="fragment_edit_shop"
+        tools:layout="@layout/fragment_edit_shop" />
 </navigation>

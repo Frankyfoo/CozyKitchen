@@ -17,6 +17,12 @@
             android:layout_margin="10dp"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:text="Note: Landscape image is preferable." />
+
             <ImageView
                 android:id="@+id/img_food"
                 android:layout_width="250dp"
@@ -83,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
                 style="@style/TitleTextViewStyle"
-                android:text="Ingredients involved" />
+                android:text="Ingredients used" />
 
             <EditText
                 android:id="@+id/et_ingredients"
@@ -121,6 +127,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:backgroundTint="@color/red"
                     android:layout_margin="8dp"
                     android:text="Remove" />
 

@@ -42,6 +42,10 @@ interface ApiInterface {
     fun getShopById(@Path("id") id: String): Call<Shop>
 
     @Headers("Content-Type: application/json")
+    @PUT("api/shop/{id}")
+    fun updateShop(@Path("id") id: String, @Body requestBody: RequestBody): Call<Shop>
+
+    @Headers("Content-Type: application/json")
     @POST("api/shop")
     fun addShop(@Body requestBody: RequestBody, @Header("chefId") chefId: String): Call<Shop>
 

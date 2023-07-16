@@ -5,13 +5,17 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.AdapterView
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
@@ -43,9 +47,12 @@ class ShopFragment : Fragment(), OnShopClickListener {
     private lateinit var binding: FragmentShopBinding
     private lateinit var adapter: ShopAdapter
     private lateinit var shopRecyclerView: RecyclerView
+    private lateinit var etSearchShop: EditText
 
     private var userLocation: LatLng? = null
-    private var onBackPressedCallback: OnBackPressedCallback? = null
+
+    private var searchQuery: String = ""
+    private var shops: MutableList<Shop>? = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +64,6 @@ class ShopFragment : Fragment(), OnShopClickListener {
         savedInstanceState: Bundle?
     ): View {
 
-        // Request location permission
-        // ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001)
-
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
             fusedLocationClient.lastLocation
@@ -67,9 +71,9 @@ class ShopFragment : Fragment(), OnShopClickListener {
                     if (location != null) {
                         // get user last known location
                         userLocation = LatLng(location.latitude, location.longitude)
-//                        Log.d("LocationTesting", "${userLocation!!.latitude}, ${userLocation!!.longitude}")
                     }
                 }
+            loadShopList()
         } else {
             // Request location permission
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001)
@@ -79,10 +83,39 @@ class ShopFragment : Fragment(), OnShopClickListener {
         shopRecyclerView = binding.shopRecyclerView
         shopRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        etSearchShop = binding.etSearchShop
+        etSearchShop.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not used
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Update the search query
+                searchQuery = s.toString().trim()
+
+                // Filter the shop list based on the search query
+                val filteredShops = filterShops(searchQuery)
+
+                // Update the adapter with the filtered shops
+                adapter.updateShopList(filteredShops, searchQuery)
+
+                // Show/hide the "No Shops" text based on the filtered shops
+                binding.noShopsTextView.visibility = if (filteredShops.isEmpty()) View.VISIBLE else View.GONE
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Not used
+            }
+        })
+
+        return binding.root
+    }
+
+    private fun loadShopList() {
         // Api Call and RecyclerView Populated
         KitchenApi.retrofitService.getShops().enqueue(object : Callback<List<Shop>?> {
             override fun onResponse(call: Call<List<Shop>?>, response: Response<List<Shop>?>) {
-                val shops = response.body() as MutableList?
+                shops = response.body()?.toMutableList()
 
                 // calculate and store the distance value between user and each shop
                 shops?.forEach { shop ->
@@ -123,7 +156,13 @@ class ShopFragment : Fragment(), OnShopClickListener {
             }
 
         })
-        return binding.root
+    }
+
+    private fun filterShops(query: String): List<Shop> {
+        // Filter the shops based on the search query
+        return shops?.filter { shop ->
+            shop.shopName.contains(query, ignoreCase = true)
+        } ?: emptyList()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

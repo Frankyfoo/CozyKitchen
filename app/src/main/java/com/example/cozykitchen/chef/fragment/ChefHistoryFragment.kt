@@ -35,7 +35,7 @@ class ChefHistoryFragment : Fragment(), OnOrderClickListener {
     private lateinit var session: LoginPreference
     private lateinit var btnTimeRange: Button
     private lateinit var orderRecyclerView: RecyclerView
-    private lateinit var adapter: OrderAdapter
+    private var adapter: OrderAdapter = OrderAdapter(emptyList(), this)
 
     private var shopId: String? = null
     private var orderList: MutableList<Order>? = null

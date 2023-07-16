@@ -2,6 +2,7 @@ package com.example.cozykitchen.ui
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -10,6 +11,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.findNavController
 import com.example.cozykitchen.R
@@ -22,6 +25,8 @@ import com.example.cozykitchen.model.User
 import com.example.cozykitchen.sharedPreference.LoginPreference
 import com.example.cozykitchen.sharedPreference.LoginPreference.Companion.KEY_USERID
 import com.example.cozykitchen.ui.fragment.ShopFragment
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

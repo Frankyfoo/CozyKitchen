@@ -37,9 +37,9 @@ class FoodDetailFragment : Fragment() {
     private lateinit var tvIngredients: TextView
     private lateinit var etCustomization: EditText
     private lateinit var tvPrice: TextView
-    private lateinit var btnPlus: Button
+    private lateinit var btnPlus: ImageButton
     private lateinit var tvQuantity: TextView
-    private lateinit var btnMinus: Button
+    private lateinit var btnMinus: ImageButton
     private lateinit var btnAddToCart: Button
 
     private var price: Float = 0f
@@ -130,10 +130,14 @@ class FoodDetailFragment : Fragment() {
                 R.id.radio_button_normal -> {
                     tvPrice.text = "RM ${price}"
                     size = "Normal"
+                    quantity = 1
+                    tvQuantity.text = quantity.toString()
                 }
                 R.id.radio_button_large -> {
-                    tvPrice.text = "RM ${price + 2.00f}"
+                    tvPrice.text = "RM ${(price + 2.00f)}"
                     size = "Large"
+                    quantity = 1
+                    tvQuantity.text = quantity.toString()
                 }
             }
         }
@@ -145,13 +149,28 @@ class FoodDetailFragment : Fragment() {
             } else {
                 quantity -= 1
                 tvQuantity.text = "$quantity"
+                if (size == "Large") {
+                    tvPrice.text = "RM ${((price + 2.00f) * quantity)}"
+                } else {
+                    tvPrice.text = "RM ${(price * quantity)}"
+                }
             }
         }
 
         // increase quantity of product
         btnPlus.setOnClickListener {
-            quantity += 1
-            tvQuantity.text = "$quantity"
+            if (quantity >= 10) {
+                Toast.makeText(requireContext(), "Quantity must be less than or equal to 10", Toast.LENGTH_SHORT).show()
+            } else {
+                quantity += 1
+                tvQuantity.text = "$quantity"
+//                tvPrice.text = "RM ${(price * quantity)}"
+                if (size == "Large") {
+                    tvPrice.text = "RM ${((price + 2.00f) * quantity)}"
+                } else {
+                    tvPrice.text = "RM ${(price * quantity)}"
+                }
+            }
         }
 
         btnAddToCart.setOnClickListener {

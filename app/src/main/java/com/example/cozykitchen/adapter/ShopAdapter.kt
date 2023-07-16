@@ -12,7 +12,7 @@ import com.example.cozykitchen.R
 import com.example.cozykitchen.model.Shop
 import com.example.cozykitchen.ui.fragment.OnShopClickListener
 
-class ShopAdapter(private val shops: List<Shop>, private val listener: OnShopClickListener): RecyclerView.Adapter<ShopAdapter.ShopViewHolder>() {
+class ShopAdapter(private var shops: List<Shop>, private val listener: OnShopClickListener): RecyclerView.Adapter<ShopAdapter.ShopViewHolder>() {
 
     inner class ShopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val shopCard: CardView = itemView.findViewById(R.id.cardShop)
@@ -61,5 +61,18 @@ class ShopAdapter(private val shops: List<Shop>, private val listener: OnShopCli
                 .load(currentShop.shopImageUrl)
                 .into(holder.shopImage)
         }
+    }
+
+    fun updateShopList(newShopList: List<Shop>, searchQuery: String) {
+        if (searchQuery.isEmpty()) {
+            // If search query is empty, display all shops
+            shops = newShopList
+        } else {
+            // Filter shops based on search query
+            shops = newShopList.filter { shop ->
+                shop.shopName.contains(searchQuery, ignoreCase = true)
+            }
+        }
+        notifyDataSetChanged()
     }
 }

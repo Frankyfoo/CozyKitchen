@@ -21,6 +21,7 @@ class CartAdapter(private val shoppingCarts: List<ShoppingCart>, private val lis
         val productQuantity: TextView = itemView.findViewById(R.id.tv_product_quantity)
         val productPrice: TextView = itemView.findViewById(R.id.tv_product_price)
         val productDescription: TextView = itemView.findViewById(R.id.tv_cart_description)
+        val productIndividualPrice: TextView = itemView.findViewById(R.id.tv_product_individual_price)
         val btnRemoveFromCart: Button = itemView.findViewById(R.id.btn_remove_from_cart)
 
         init {
@@ -54,6 +55,7 @@ class CartAdapter(private val shoppingCarts: List<ShoppingCart>, private val lis
             holder.productName.text = currentCart.product.productName
             holder.productSize.text = "Portion: "  + currentCart.size
             holder.productQuantity.text = "Qty: ${currentCart.quantityBought}"
+//            holder.productIndividualPrice.text = "Price: ${currentCart.product.productPrice}"
 
             if (!currentCart.orderId.isNullOrEmpty() || currentCart.status == "PAY_COMPLETED") {
                 holder.btnRemoveFromCart.visibility = View.GONE
@@ -62,9 +64,12 @@ class CartAdapter(private val shoppingCarts: List<ShoppingCart>, private val lis
             }
 
             if (currentCart.size == "Large") {
-                holder.productPrice.text = "RM ${String.format("%.2f", (currentCart.product.productPrice + 2.00f) * currentCart.quantityBought)}"
+                holder.productPrice.text = "Total: RM ${String.format("%.2f", (currentCart.product.productPrice + 2.00f) * currentCart.quantityBought)}"
+                holder.productIndividualPrice.text = "Price: ${String.format("%.2f", (currentCart.product.productPrice + 2.00f))}"
+
             } else {
-                holder.productPrice.text = "RM ${String.format("%.2f", (currentCart.product.productPrice) * currentCart.quantityBought)}"
+                holder.productPrice.text = "Total: RM ${String.format("%.2f", (currentCart.product.productPrice) * currentCart.quantityBought)}"
+                holder.productIndividualPrice.text = "Price: ${String.format("%.2f", currentCart.product.productPrice)}"
             }
 
             if (currentCart.customizationDescription.isNullOrEmpty()) {

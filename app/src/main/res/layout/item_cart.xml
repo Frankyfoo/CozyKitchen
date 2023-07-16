@@ -67,13 +67,22 @@
                     tools:text="Qty: 5" />
 
                 <TextView
+                    android:id="@+id/tv_product_individual_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Price: RM 5.99" />
+
+                <TextView
                     android:id="@+id/tv_product_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    tools:text="RM 5.99" />
+                    tools:text="Total: RM 5.99" />
 
             </LinearLayout>
 
@@ -110,6 +119,7 @@
                 android:id="@+id/btn_remove_from_cart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/red"
                 android:text="Remove"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -13,7 +13,7 @@ import com.example.cozykitchen.chef.fragment.MenuFragment
 import com.example.cozykitchen.model.Product
 import com.example.cozykitchen.ui.fragment.OnProductClickListener
 
-class ProductAdapter(private val products: List<Product>, private val listener: OnProductClickListener? = null): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(private var products: List<Product>, private val listener: OnProductClickListener? = null): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     inner class ProductViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val foodCard: CardView = itemView.findViewById(R.id.cardFood)
@@ -62,6 +62,19 @@ class ProductAdapter(private val products: List<Product>, private val listener: 
                 .load(currentProduct.productUrl)
                 .into(holder.foodImage)
         }
+    }
+
+    fun updateProductList(newProductList: List<Product>, searchQuery: String) {
+        if (searchQuery.isEmpty()) {
+            // If search query is empty, display all shops
+            products = newProductList
+        } else {
+            // Filter shops based on search query
+            products = newProductList.filter { product ->
+                product.productName.contains(searchQuery, ignoreCase = true)
+            }
+        }
+        notifyDataSetChanged()
     }
 
 }

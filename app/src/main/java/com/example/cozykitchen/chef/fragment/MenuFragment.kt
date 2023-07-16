@@ -2,11 +2,14 @@ package com.example.cozykitchen.chef.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +23,7 @@ import com.example.cozykitchen.chef.activity.AddShopActivity
 import com.example.cozykitchen.databinding.FragmentMenuBinding
 import com.example.cozykitchen.model.Chef
 import com.example.cozykitchen.model.Product
+import com.example.cozykitchen.model.Shop
 import com.example.cozykitchen.sharedPreference.LoginPreference
 import com.example.cozykitchen.ui.fragment.OnProductClickListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,12 +35,16 @@ class MenuFragment : Fragment(), OnProductClickListener {
 
     private lateinit var binding: FragmentMenuBinding
     private lateinit var session: LoginPreference
-    private lateinit var adapter: ProductAdapter
+    private  var adapter: ProductAdapter = ProductAdapter(emptyList(), this)
     private lateinit var foodRecyclerView: RecyclerView
     private lateinit var fabAddFood: FloatingActionButton
+    private lateinit var etSearchMenu: EditText
 
     private var shopAvailable: Boolean = false
     private var shopId: String? = null
+
+    private var searchQuery: String = ""
+    private var foods: MutableList<Product>? = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -59,6 +67,31 @@ class MenuFragment : Fragment(), OnProductClickListener {
         session = LoginPreference(requireContext())
         val chefId = session.getCurrentUserId()
 
+        etSearchMenu = binding.etSearchMenu
+        etSearchMenu.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not used
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Update the search query
+                searchQuery = s.toString().trim()
+
+                // Filter the products based on the search query
+                val filteredProducts = filterProducts(searchQuery)
+
+                // Update the adapter with the filtered products
+                adapter.updateProductList(filteredProducts, searchQuery)
+
+                // Show/hide the "No Products" text based on the filtered products
+                binding.tvNoFood.visibility = if (filteredProducts.isEmpty()) View.VISIBLE else View.GONE
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Not used
+            }
+        })
+
         // get the ShopId of the current logged Chef
         KitchenApi.retrofitService.getChefById(chefId).enqueue(object: Callback<Chef> {
             override fun onResponse(call: Call<Chef>, response: Response<Chef>) {
@@ -77,13 +110,15 @@ class MenuFragment : Fragment(), OnProductClickListener {
                                 response: Response<List<Product>>
                             ) {
                                 if (response.isSuccessful) {
-                                    val foods = response.body()
+                                    foods = response.body() as MutableList<Product>?
                                     if (!foods.isNullOrEmpty()) {
-                                        binding.tvNoFood.visibility = View.GONE
-                                        adapter = ProductAdapter(foods, this@MenuFragment)
+                                        adapter = ProductAdapter(foods!!, this@MenuFragment)
                                         foodRecyclerView.adapter = adapter
+                                        binding.tvNoFood.visibility = View.GONE
+                                        etSearchMenu.visibility = View.VISIBLE // Show the search view
                                     } else {
                                         binding.tvNoFood.visibility = View.VISIBLE
+                                        etSearchMenu.visibility = View.GONE // Hide the search view
                                     }
 //                                    Log.d("Testing", "$foods")
                                 }
@@ -98,6 +133,7 @@ class MenuFragment : Fragment(), OnProductClickListener {
                         // shows that chef has not created a shop yet
                         binding.tvNoShop.visibility = View.VISIBLE
                         binding.fabAddFood.visibility = View.GONE
+                        binding.etSearchMenu.visibility = View.GONE
                         binding.tvNoShop.setOnClickListener {
                             val intent = Intent(requireContext(), AddShopActivity::class.java)
                             startActivity(intent)
@@ -131,6 +167,13 @@ class MenuFragment : Fragment(), OnProductClickListener {
 
         // Hide the back button in the app bar
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
+    private fun filterProducts(query: String): List<Product> {
+        // Filter the shops based on the search query
+        return foods?.filter { food ->
+            food.productName.contains(query, ignoreCase = true)
+        } ?: emptyList()
     }
 
     override fun onItemClick(product: Product) {

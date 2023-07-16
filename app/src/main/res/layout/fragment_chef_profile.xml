@@ -18,9 +18,17 @@
             android:text="Edit Profile" />
 
         <Button
+            android:id="@+id/btn_edit_shop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Edit Shop" />
+
+        <Button
             android:id="@+id/btn_chef_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/red"
             android:text="Log Out"
              />
 

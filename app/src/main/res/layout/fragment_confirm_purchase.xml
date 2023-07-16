@@ -157,7 +157,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Remarks"
+            android:text="Remarks (Optional)"
             style="@style/TitleTextViewStyle" />
 
         <EditText

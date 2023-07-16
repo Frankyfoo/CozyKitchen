@@ -48,7 +48,7 @@ class AddShopActivity : AppCompatActivity(), OnMarkerDragListener {
     private var longitude: Double = 0.0
 
     private val PICK_IMAGE_REQUEST = 1
-    private val CAMERA_REQUEST = 2
+//    private val CAMERA_REQUEST = 2
 
     private val storageRef = FirebaseStorage.getInstance().reference
 
@@ -83,19 +83,7 @@ class AddShopActivity : AppCompatActivity(), OnMarkerDragListener {
 
         // show dialog to select how image are taken
         btnAddImage.setOnClickListener {
-            val options = arrayOf("Choose from Gallery", "Take Photo")
-
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Select Image")
-            builder.setItems(options) { dialog, which ->
-                when (which) {
-                    0 -> openGallery()
-                    // Todo: Later will be revised
-//                    1 -> openCamera()
-                }
-            }
-
-            builder.show()
+            openGallery()
         }
 
         btnAddShop.setOnClickListener {
@@ -155,23 +143,23 @@ class AddShopActivity : AppCompatActivity(), OnMarkerDragListener {
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
-    private fun openCamera() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, CAMERA_REQUEST)
-    }
+//    private fun openCamera() {
+//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//        startActivityForResult(intent, CAMERA_REQUEST)
+//    }
 
     // degraded quality
-    private fun saveBitmapToFile(bitmap: Bitmap): Uri {
-        val fileName = "${UUID.randomUUID()}.jpg" // Generate a unique file name
-        val file = File(filesDir, fileName) // Replace "image.jpg" with a desired file name
-        file.createNewFile()
-
-        val outputStream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-        outputStream.close()
-
-        return Uri.fromFile(file)
-    }
+//    private fun saveBitmapToFile(bitmap: Bitmap): Uri {
+//        val fileName = "${UUID.randomUUID()}.jpg" // Generate a unique file name
+//        val file = File(filesDir, fileName) // Replace "image.jpg" with a desired file name
+//        file.createNewFile()
+//
+//        val outputStream = FileOutputStream(file)
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+//        outputStream.close()
+//
+//        return Uri.fromFile(file)
+//    }
 
     private fun saveImageToFile(imageUri: Uri): Uri {
         val fileName = "${UUID.randomUUID()}.jpg" // Generate a unique file name
