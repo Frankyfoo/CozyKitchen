@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter
 
 class TimeListGenerator {
     @RequiresApi(Build.VERSION_CODES.O)
-    fun generateTimeList(): List<TimeList> {
+    fun generateTimeList(mode: String? = null): List<TimeList> {
         val availableDates = mutableListOf<LocalDateTime>()
 
         // Generate a list of available dates within the 3-day advance ordering range
@@ -21,14 +21,29 @@ class TimeListGenerator {
             val lunchTime = date.atTime(12, 0)
             val dinnerTime = date.atTime(18, 0)
 
-            // Check if the current time is at least 2 hours before the lunch and dinner times
-            val currentTime = LocalDateTime.now()
-            if (currentTime.plusHours(2) <= lunchTime) {
+//            // Check if the current time is at least 2 hours before the lunch and dinner times
+//            val currentTime = LocalDateTime.now()
+//            if (currentTime.plusHours(2) <= lunchTime) {
+//                availableDates.add(lunchTime)
+//            }
+//
+//            if (currentTime.plusHours(2) <= dinnerTime) {
+//                availableDates.add(dinnerTime)
+//            }
+            // Check if the mode is "Summary" to skip the 2 hours before check
+            if (mode == "Summary") {
                 availableDates.add(lunchTime)
-            }
-
-            if (currentTime.plusHours(2) <= dinnerTime) {
                 availableDates.add(dinnerTime)
+            } else {
+                // Check if the current time is at least 2 hours before the lunch and dinner times
+                val currentTime = LocalDateTime.now()
+                if (currentTime.plusHours(2) <= lunchTime) {
+                    availableDates.add(lunchTime)
+                }
+
+                if (currentTime.plusHours(2) <= dinnerTime) {
+                    availableDates.add(dinnerTime)
+                }
             }
         }
 

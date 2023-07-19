@@ -200,11 +200,10 @@ class ManageFoodFragment : Fragment() {
                 uploadImage { imageUrl ->
                     if (imageUrl != null) {
                         imageUrlString = imageUrl
-//                        Toast.makeText(requireContext(), "$imageUrlString.", Toast.LENGTH_SHORT).show()
 
                         val foodData = shopId?.let { id ->
                             Product(
-                                "test", name, description, ingredients, imageUrl, price.toFloat(),  true, id
+                                "test", name, description, ingredients, imageUrl, String.format("%.2f", price.toFloat()).toFloat() ,  true, id
                             )
                         }
 
@@ -270,7 +269,8 @@ class ManageFoodFragment : Fragment() {
                         // Update the fields of the existing product object
                         product.productName = name
                         product.productDescription = description
-                        product.productPrice = price.toFloat()
+                        product.productPrice = String.format("%.2f", price.toFloat()).toFloat()
+
                         product.productIngredients = ingredients
                         product.productUrl = imageUrl
 
@@ -295,7 +295,7 @@ class ManageFoodFragment : Fragment() {
                         // No image is selected, update the food with the existing image URL
                         product.productName = name
                         product.productDescription = description
-                        product.productPrice = price.toFloat()
+                        product.productPrice = String.format("%.2f", price.toFloat()).toFloat()
                         product.productIngredients = ingredients
 
                         val foodDataBody = RequestBodySingleton.makeGSONRequestBody(product)

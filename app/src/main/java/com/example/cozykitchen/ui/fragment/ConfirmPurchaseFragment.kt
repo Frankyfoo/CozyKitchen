@@ -291,7 +291,6 @@ class ConfirmPurchaseFragment : Fragment() {
         spinnerTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 selectedTimeString = parent?.getItemAtPosition(position) as String
-//                Log.d("TestingSelected", "$selectedTimeString")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -373,26 +372,16 @@ class ConfirmPurchaseFragment : Fragment() {
         }
 
         btnConfirmPurchase.setOnClickListener {
-//            if (cardId.isNullOrEmpty() || addressId.isNullOrEmpty()) {
-//                Toast.makeText(requireContext(), "Please select a Card or an Address.", Toast.LENGTH_SHORT).show()
-//            } else {
-//
-//                val order = PostOrder("test", totalCost!!, "PAY_COMPLETED", userId!!, addressId!!, cardId!!)
-//
-//                confirmPurchase(RequestBodySingleton.makeGSONRequestBody(order))
-//            }
             if (paymentType == null || (paymentType == "CARD" && cardId.isNullOrEmpty()) || (paymentType == "WALLET" && walletId.isNullOrEmpty()) || addressId.isNullOrEmpty()) {
-                Toast.makeText(requireContext(), "Please select a valid payment option.", Toast.LENGTH_SHORT).show()
-            } else {
+                if (addressId.isNullOrEmpty()) {
+                    Toast.makeText(requireContext(), "Please add or select a delivery address.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Please add or select a valid payment option.", Toast.LENGTH_SHORT).show()
+                }
 
+            } else {
                 val remarks = etRemarks.text.toString().trim()
                 var isNotValid = false
-
-//                if (remarks.isEmpty()) {
-//                    etRemarks.error = "Required Field."
-//                    etRemarks.requestFocus()
-//                    isNotValid = true
-//                }
 
                 if (!isNotValid) {
                     val order = PostOrder(
@@ -408,11 +397,8 @@ class ConfirmPurchaseFragment : Fragment() {
                         selectedTimeString,
                         shopId
                     )
-//                    Log.d("PostOrderTesting", "$order")
                     confirmPurchase(RequestBodySingleton.makeGSONRequestBody(order))
                 }
-
-
             }
         }
 

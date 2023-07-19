@@ -19,6 +19,7 @@ class LoginPreference {
         val KEY_EMAIL = "userEmail"
         val KEY_PHONE_NUMBER = "userPhoneNumber"
         val KEY_NAME = "userName"
+        val KEY_SHOP_ID = "shopId" // New key for shop ID
     }
 
     constructor(context: Context) {
@@ -61,6 +62,17 @@ class LoginPreference {
 
     fun getCurrentUserId(): String {
         return pref.getString(KEY_USERID, null) ?: ""
+    }
+
+    // function to create a shop ID session
+    fun createShopIdSession(shopId: String) {
+        editor.putString(KEY_SHOP_ID, shopId)
+        editor.apply()
+    }
+
+    // function to get the shop ID
+    fun getShopId(): String {
+        return pref.getString(KEY_SHOP_ID, null) ?: ""
     }
 
     fun LogoutUser() {

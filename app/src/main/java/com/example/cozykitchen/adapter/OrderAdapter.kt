@@ -62,7 +62,11 @@ class OrderAdapter(private var orders: List<Order>, private val listener: OnOrde
         val currentOrder = orders[position]
 
         holder.tvOrderId.text = currentOrder.orderId
-        holder.tvRemarks.text = "Remarks: " + currentOrder.remarks
+        if(currentOrder.remarks.isNullOrEmpty()) {
+            holder.tvRemarks.text = "Remarks: Empty"
+        } else {
+            holder.tvRemarks.text = "Remarks: " + currentOrder.remarks
+        }
         holder.tvPaymentType.text = "Paid with: " + currentOrder.paymentType
         holder.tvDeliveryTime.text = "Delivery Time: " + currentOrder.deliveryDateTimeString
         holder.tvOrderPrice.text = "Total Cost: RM " + (currentOrder.totalPrice + 3.0f).toString()

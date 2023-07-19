@@ -87,6 +87,7 @@ class AddShopActivity : AppCompatActivity(), OnMarkerDragListener {
         }
 
         btnAddShop.setOnClickListener {
+
             val name = etShopName.text.toString().trim()
             val description = etShopDescription.text.toString().trim()
             var isNotValid = false
@@ -130,8 +131,6 @@ class AddShopActivity : AppCompatActivity(), OnMarkerDragListener {
                             }
 
                         })
-                    } else {
-                        Toast.makeText(this, "Error occurred.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -189,7 +188,6 @@ class AddShopActivity : AppCompatActivity(), OnMarkerDragListener {
                             .into(imageShop)
                     }
                 }
-                // todo: not used for now
 //                CAMERA_REQUEST -> {
 //                    val photo: Bitmap? = data?.extras?.get("data") as? Bitmap
 ////                    val photo: Uri? = data?.data

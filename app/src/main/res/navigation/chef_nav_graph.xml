@@ -54,4 +54,9 @@
         android:name="com.example.cozykitchen.chef.fragment.EditShopFragment"
         android:label="fragment_edit_shop"
         tools:layout="@layout/fragment_edit_shop" />
+    <fragment
+        android:id="@+id/chefSummaryFragment"
+        android:name="com.example.cozykitchen.chef.fragment.ChefSummaryFragment"
+        android:label="fragment_chef_summary"
+        tools:layout="@layout/fragment_chef_summary" />
 </navigation>

@@ -30,6 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.system.exitProcess
 
 class MenuFragment : Fragment(), OnProductClickListener {
 
@@ -118,9 +119,8 @@ class MenuFragment : Fragment(), OnProductClickListener {
                                         etSearchMenu.visibility = View.VISIBLE // Show the search view
                                     } else {
                                         binding.tvNoFood.visibility = View.VISIBLE
-                                        etSearchMenu.visibility = View.GONE // Hide the search view
+                                        etSearchMenu.isEnabled = false
                                     }
-//                                    Log.d("Testing", "$foods")
                                 }
                             }
 
@@ -153,7 +153,6 @@ class MenuFragment : Fragment(), OnProductClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Todo: Add FAB function to open new Fragment for add Food
         fabAddFood.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("ShopId", shopId)

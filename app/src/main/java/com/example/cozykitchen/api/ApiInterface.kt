@@ -78,6 +78,9 @@ interface ApiInterface {
     @GET("api/shoppingcart/getshoppingcartlistbyorderid/{orderId}")
     fun getShoppingCartListByOrderId(@Path("orderId") orderId: String): Call<List<ShoppingCart>>
 
+    @GET("api/shoppingcart/getOrderSummary")
+    fun getOrderSummary(@Header("deliveryDateTimeString") dateTimeString: String, @Header("shopId") shopId: String): Call<List<Summary>>
+
     @DELETE("api/shoppingcart/{id}")
     fun deleteShoppingCart(@Path("id") id: String): Call<ShoppingCart>
 

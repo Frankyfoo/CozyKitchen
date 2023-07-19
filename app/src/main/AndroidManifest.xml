@@ -20,6 +20,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.PermissionRequestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_permission_request"
+            android:theme="@style/Theme.CozyKitchen.NoActionBar" />
+        <activity
             android:name=".chef.activity.AddShopActivity"
             android:exported="false" />
         <activity
