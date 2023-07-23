@@ -44,11 +44,6 @@ class OrderAdapter(private var orders: List<Order>, private val listener: OnOrde
         notifyDataSetChanged()
     }
 
-//    fun clearOrderList() {
-//        orders.clear()
-//        notifyDataSetChanged()
-//    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_order, parent, false)
         return OrderViewHolder(itemView)

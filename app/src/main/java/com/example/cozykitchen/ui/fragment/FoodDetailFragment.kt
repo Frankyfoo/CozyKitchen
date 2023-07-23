@@ -53,7 +53,7 @@ class FoodDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+//    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -86,7 +86,6 @@ class FoodDetailFragment : Fragment() {
                 override fun onResponse(call: Call<Product>, response: Response<Product>) {
 
                     val product = response.body()
-//                    Log.d("Testing", "$product")
 
                     if (product != null) {
                         if (product.productUrl.isNullOrEmpty()) {
@@ -164,7 +163,6 @@ class FoodDetailFragment : Fragment() {
             } else {
                 quantity += 1
                 tvQuantity.text = "$quantity"
-//                tvPrice.text = "RM ${(price * quantity)}"
                 if (size == "Large") {
                     tvPrice.text = "RM ${((price + 2.00f) * quantity)}"
                 } else {

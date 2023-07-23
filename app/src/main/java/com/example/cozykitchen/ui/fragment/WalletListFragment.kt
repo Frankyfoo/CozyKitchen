@@ -95,7 +95,6 @@ class WalletListFragment : Fragment(), OnWalletClickListener {
     }
 
     override fun onDeleteClick(walletId: String) {
-//        Toast.makeText(requireContext(), "$walletId", Toast.LENGTH_SHORT).show()
         KitchenApi.retrofitService.deleteWallet(walletId).enqueue(object: Callback<Wallet>{
             override fun onResponse(call: Call<Wallet>, response: Response<Wallet>) {
                 if (response.isSuccessful) {

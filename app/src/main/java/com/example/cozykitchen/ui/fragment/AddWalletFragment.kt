@@ -14,6 +14,7 @@ import com.example.cozykitchen.R
 import com.example.cozykitchen.api.KitchenApi
 import com.example.cozykitchen.databinding.FragmentAddWalletBinding
 import com.example.cozykitchen.helper.RequestBodySingleton
+import com.example.cozykitchen.helper.ValidatorSingleton
 import com.example.cozykitchen.model.Wallet
 import com.example.cozykitchen.sharedPreference.LoginPreference
 import okhttp3.RequestBody
@@ -64,6 +65,10 @@ class AddWalletFragment : Fragment() {
 
             if (phoneNumber.isEmpty()) {
                 etPhoneNumber.error = "Required Field."
+                etPhoneNumber.requestFocus()
+                isNotValid = true
+            } else if (!ValidatorSingleton.isValidMalaysiaPhoneNumber(phoneNumber)) {
+                etPhoneNumber.error = "Invalid malaysia number"
                 etPhoneNumber.requestFocus()
                 isNotValid = true
             }

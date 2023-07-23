@@ -33,6 +33,7 @@ class ChefProfileFragment : Fragment() {
         // Set the title in the app bar
         (activity as AppCompatActivity).supportActionBar?.title = "Profile"
 
+        // get chef id
         session = LoginPreference(requireContext())
         val chefId = session.getCurrentUserId()
 
@@ -73,7 +74,7 @@ class ChefProfileFragment : Fragment() {
         // Hide the back button in the app bar
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
-        // edit
+        // edit profile
         binding.btnEditProfile.setOnClickListener {
             findNavController().navigate(R.id.action_chefProfileFragment_to_chefEditProfileFragment)
         }

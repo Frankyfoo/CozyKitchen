@@ -45,12 +45,13 @@ class LoginActivity : AppCompatActivity() {
         // Request location permission
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001)
 
-        //session.getUserDetails()[KEY_USERID]?.startsWith("CUS") == true
-        // if user has logged in before and did not press log out, it will go the MainActivity instead
+        // if user has logged in before and did not press log out
         if (session.getCurrentUserId().startsWith("CUS")) {
+            // run MainActivity instead if last login was CUS
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         } else if (session.getCurrentUserId().startsWith("CHEF")) {
+            // runs ChefMainActivity instead if last login was CHEF
             val intent = Intent(this, ChefMainActivity::class.java)
             startActivity(intent)
         } else {

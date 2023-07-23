@@ -81,32 +81,6 @@ class ChefSummaryFragment : Fragment() {
             binding.tvNoSummary.visibility = View.VISIBLE
         }
 
-        // get ShopId based on chef Id
-//        if (shopId.isNullOrEmpty()) {
-//            KitchenApi.retrofitService.getChefById(chefId).enqueue(object: Callback<Chef>{
-//                @SuppressLint("ResourceAsColor")
-//                override fun onResponse(call: Call<Chef>, response: Response<Chef>) {
-//                    if (response.isSuccessful) {
-//                        var chef = response.body()
-//                        if (chef != null) {
-//                            shopId = chef.shopId
-//                            if (shopId.isNullOrEmpty()) {
-//                                binding.spinnerTime.isEnabled = false
-//                                binding.rvSummary.visibility = View.GONE
-//                                binding.tvNoSummary.text = "You have not created a shop."
-//                                binding.tvNoSummary.setTextColor(R.color.grey)
-//                                binding.tvNoSummary.visibility = View.VISIBLE
-//                            }
-//                        }
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<Chef>, t: Throwable) {
-//                    Log.d("Testing", "${t.message}")
-//                }
-//            })
-//        }
-
         // Inflate the layout for this fragment
         return binding.root
     }

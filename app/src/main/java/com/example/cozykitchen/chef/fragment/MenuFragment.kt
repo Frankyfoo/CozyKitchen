@@ -153,6 +153,7 @@ class MenuFragment : Fragment(), OnProductClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // move to add menu fragment
         fabAddFood.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("ShopId", shopId)

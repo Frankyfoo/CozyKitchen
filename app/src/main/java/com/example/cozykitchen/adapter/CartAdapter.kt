@@ -55,7 +55,6 @@ class CartAdapter(private val shoppingCarts: List<ShoppingCart>, private val lis
             holder.productName.text = currentCart.product.productName
             holder.productSize.text = "Portion: "  + currentCart.size
             holder.productQuantity.text = "Qty: ${currentCart.quantityBought}"
-//            holder.productIndividualPrice.text = "Price: ${currentCart.product.productPrice}"
 
             if (!currentCart.orderId.isNullOrEmpty() || currentCart.status == "PAY_COMPLETED") {
                 holder.btnRemoveFromCart.visibility = View.GONE

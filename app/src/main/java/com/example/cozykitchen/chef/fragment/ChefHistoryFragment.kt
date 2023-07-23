@@ -69,6 +69,7 @@ class ChefHistoryFragment : Fragment(), OnOrderClickListener {
                     if (chef != null) {
                         shopId = chef.shopId
                         if (!shopId.isNullOrEmpty()) {
+                            // get orders by Shop ID
                             KitchenApi.retrofitService.getOrdersByShopId(shopId!!).enqueue(object: Callback<List<Order>>{
                                 override fun onResponse(
                                     call: Call<List<Order>>,
@@ -84,8 +85,6 @@ class ChefHistoryFragment : Fragment(), OnOrderClickListener {
                                             }.toMutableList()
 
                                             orderList!!.reverse()
-
-//                                            Log.d("TestingOrder", "$orderList")
 
                                             adapter = OrderAdapter(orderList!!, this@ChefHistoryFragment)
                                             orderRecyclerView.adapter = adapter
@@ -105,40 +104,6 @@ class ChefHistoryFragment : Fragment(), OnOrderClickListener {
                             binding.llSpinner.visibility = View.GONE
                             orderRecyclerView.visibility = View.GONE
                         }
-//                        shopId?.let {
-//                            KitchenApi.retrofitService.getOrdersByShopId(it).enqueue(object: Callback<List<Order>>{
-//                                override fun onResponse(
-//                                    call: Call<List<Order>>,
-//                                    response: Response<List<Order>>
-//                                ) {
-//                                    if (response.isSuccessful) {
-//                                        orderList = response.body() as MutableList<Order>
-//                                        if (!orderList.isNullOrEmpty()) {
-//
-//                                            // add LocalDateTime object to each items in orderList
-//                                            orderList = orderList!!.map { order ->
-//                                                order.copy(deliveryLocalDateTime = LocalDateTime.parse(order.deliveryDateTime, formatter))
-//                                            }.toMutableList()
-//
-//                                            orderList!!.reverse()
-//
-////                                            Log.d("TestingOrder", "$orderList")
-//
-//                                            adapter = OrderAdapter(orderList!!, this@ChefHistoryFragment)
-//                                            orderRecyclerView.adapter = adapter
-//
-//                                            binding.tvNoHistory.visibility = View.GONE
-//                                        } else {
-//                                            binding.tvNoHistory.visibility = View.VISIBLE
-//                                        }
-//                                    }
-//                                }
-//
-//                                override fun onFailure(call: Call<List<Order>>, t: Throwable) {
-//                                    Toast.makeText(requireContext(), "${t.message}", Toast.LENGTH_SHORT).show()
-//                                }
-//                            })
-//                        }
                     }
                 }
             }
@@ -228,7 +193,6 @@ class ChefHistoryFragment : Fragment(), OnOrderClickListener {
         }
 
         if (!filteredList.isNullOrEmpty()) {
-//            adapter.clearOrderList() // Clear the existing order list
             adapter.updateOrderList(filteredList)
             binding.tvNoHistory.visibility = View.GONE
         } else {

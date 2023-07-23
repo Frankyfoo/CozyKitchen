@@ -36,7 +36,6 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_profile, container, false)
         return binding.root
     }
 
@@ -56,18 +55,22 @@ class ProfileFragment : Fragment() {
             session.LogoutUser()
         }
 
+        // go to edit profile
         binding.btnEditProfile.setOnClickListener {
             findNavController().navigate(R.id.action_profile_fragment_to_editProfileFragment)
         }
 
+        // go to address management
         binding.btnManageAddress.setOnClickListener {
             findNavController().navigate(R.id.action_profile_fragment_to_addressListFragment)
         }
 
+        // go to card management
         binding.btnManagePayment.setOnClickListener {
             findNavController().navigate(R.id.action_profile_fragment_to_cardListFragment)
         }
 
+        // go to wallet management
         binding.btnManageWallet.setOnClickListener {
             findNavController().navigate(R.id.action_profile_fragment_to_walletListFragment)
         }

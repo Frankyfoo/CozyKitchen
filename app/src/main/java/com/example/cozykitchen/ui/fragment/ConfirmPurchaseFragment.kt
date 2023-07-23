@@ -100,7 +100,6 @@ class ConfirmPurchaseFragment : Fragment() {
         // get Cards by UserID
         KitchenApi.retrofitService.getCardsByUserId(userId!!).enqueue(object: Callback<List<Card>>{
             override fun onResponse(call: Call<List<Card>>, response: Response<List<Card>>) {
-//                Log.d("API", "${response.body()}")
                 if (response.isSuccessful) {
                     val body = response.body()
                     if (body != null) {
@@ -109,7 +108,6 @@ class ConfirmPurchaseFragment : Fragment() {
 
                         // cast the response to global variable
                         cardList = body.toMutableList()
-//                        Log.d("CardList", "$cardList")
 
                         // add the each card number to List of String
                         for (card in cardList!!) {
@@ -140,7 +138,6 @@ class ConfirmPurchaseFragment : Fragment() {
         // get Addresses by UserID
         KitchenApi.retrofitService.getAddressesByUserId(userId!!).enqueue(object: Callback<List<Address>>{
             override fun onResponse(call: Call<List<Address>>, response: Response<List<Address>>) {
-//                Log.d("API", "${response.body()}")
                 if (response.isSuccessful) {
                     val body = response.body()
                     if (body != null) {
@@ -235,7 +232,6 @@ class ConfirmPurchaseFragment : Fragment() {
                     binding.llWallet.visibility = View.GONE
                     spinnerWallet.visibility = View.GONE
                     paymentType = "CARD"
-//                    selectedCard = cardList?.get(spinnerCard.selectedItemPosition)
                     selectedCard = if (spinnerCard.selectedItemPosition != AdapterView.INVALID_POSITION) {
                         cardList?.get(spinnerCard.selectedItemPosition)
                     } else {
@@ -250,7 +246,6 @@ class ConfirmPurchaseFragment : Fragment() {
                     binding.llWallet.visibility = View.VISIBLE
                     spinnerWallet.visibility = View.VISIBLE
                     paymentType = "WALLET"
-//                    selectedWallet = walletList?.get(spinnerWallet.selectedItemPosition)
                     selectedWallet = if (spinnerWallet.selectedItemPosition != AdapterView.INVALID_POSITION) {
                         walletList?.get(spinnerWallet.selectedItemPosition)
                     } else {
@@ -306,7 +301,6 @@ class ConfirmPurchaseFragment : Fragment() {
                 // get the card number showing in the spinner and remove the whitespace
                 var cardNumber = parent?.getItemAtPosition(position) as String
                 cardNumber = cardNumber.replace(" ", "")
-//                Log.d("TestingCardNumber", "$cardNumber")
 
                 // find the card that has the same card number
                 var selectedCard = cardList!!.firstOrNull{ it.cardNumber == cardNumber}
@@ -314,7 +308,6 @@ class ConfirmPurchaseFragment : Fragment() {
                 // if found then get the card id
                 if (selectedCard != null) {
                     cardId = selectedCard!!.cardId
-//                    Log.d("TestingCardGet", "$cardId")
                 }
 
             }
@@ -330,7 +323,6 @@ class ConfirmPurchaseFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 // get the Address Name showing in the spinner
                 var addressName = parent?.getItemAtPosition(position) as String
-//                Log.d("TestingAddress", "$addressName")
 
                 // find the card that has the same card number
                 var selectedAddress = addressList!!.firstOrNull{ it.name == addressName}
@@ -338,7 +330,6 @@ class ConfirmPurchaseFragment : Fragment() {
                 // if found then get the address id
                 if (selectedAddress != null) {
                     addressId = selectedAddress.addressId
-//                    Log.d("TestingAddress", "$addressId")
                 }
             }
 
@@ -353,7 +344,6 @@ class ConfirmPurchaseFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 // get the Wallet Phone Number showing in the spinner
                 var walletPhoneNumber = parent?.getItemAtPosition(position) as String
-//                Log.d("TestingAddress", "$walletPhoneNumber")
 
                 // find the card that has the same card number
                 var selectedWallet = walletList!!.firstOrNull{ it.phoneNumber == walletPhoneNumber}
@@ -361,7 +351,6 @@ class ConfirmPurchaseFragment : Fragment() {
                 // if found then get the address id
                 if (selectedWallet != null) {
                     walletId = selectedWallet!!.walletId
-//                    Log.d("TestingWallet", "$walletId")
                 }
             }
 
@@ -424,6 +413,7 @@ class ConfirmPurchaseFragment : Fragment() {
         })
     }
 
+    // format card number to have space after 4 number
     private fun formatCardNumber(cardNumber: String): String {
         if (cardNumber.isNullOrEmpty()) {
             return cardNumber

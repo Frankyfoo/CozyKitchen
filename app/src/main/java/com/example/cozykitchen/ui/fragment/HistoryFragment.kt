@@ -40,12 +40,10 @@ class HistoryFragment : Fragment(), OnOrderClickListener {
     private lateinit var orderRecyclerView: RecyclerView
 
     private var orderList: MutableList<Order> = mutableListOf()
-//    private var previousOrderList: MutableList<Order> = mutableListOf()
     private val statusOptions = listOf("ALL", "PAY_COMPLETED", "DELIVERED", "CANCELLED")
     private var selectedStatus: String? = null
 
     private lateinit var userId: String
-    private var isDataLoaded = false // Flag to track if the data has been loaded
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

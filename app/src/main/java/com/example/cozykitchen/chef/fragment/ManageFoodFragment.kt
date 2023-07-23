@@ -270,7 +270,6 @@ class ManageFoodFragment : Fragment() {
                         product.productName = name
                         product.productDescription = description
                         product.productPrice = String.format("%.2f", price.toFloat()).toFloat()
-
                         product.productIngredients = ingredients
                         product.productUrl = imageUrl
 

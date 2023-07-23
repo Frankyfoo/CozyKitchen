@@ -43,7 +43,6 @@ class AddressFragment : Fragment(), OnMarkerDragListener {
     private var userId = ""
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
-//    private var addressId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +59,6 @@ class AddressFragment : Fragment(), OnMarkerDragListener {
         // get current userid
         session = LoginPreference(requireContext())
         userId = session.getCurrentUserId()
-
-//        addressId = arguments?.getString("AddressId")
 
         binding = FragmentAddressBinding.inflate(inflater, container, false)
         tvStreet = binding.tvStreet
@@ -91,22 +88,6 @@ class AddressFragment : Fragment(), OnMarkerDragListener {
         childFragmentManager.beginTransaction()
             .replace(R.id.map_fragment_container, fragment)
             .commit()
-
-//        Log.d("ABC", "$addressId")
-
-//        if (!addressId.isNullOrEmpty()) {
-//            KitchenApi.retrofitService.getAddressById(addressId!!).enqueue(object : Callback<Address?> {
-//                override fun onResponse(call: Call<Address?>, response: Response<Address?>) {
-//                    val address =response.body()
-////                    Log.d("Testing", "$address")
-//                }
-//
-//                override fun onFailure(call: Call<Address?>, t: Throwable) {
-//                    TODO("Not yet implemented")
-//                }
-//
-//            })
-//        }
 
         btnAddAddress.setOnClickListener {
             val street = tvStreet.text.toString().trim()

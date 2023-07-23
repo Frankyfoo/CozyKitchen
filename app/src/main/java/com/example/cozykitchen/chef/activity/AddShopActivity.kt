@@ -48,7 +48,6 @@ class AddShopActivity : AppCompatActivity(), OnMarkerDragListener {
     private var longitude: Double = 0.0
 
     private val PICK_IMAGE_REQUEST = 1
-//    private val CAMERA_REQUEST = 2
 
     private val storageRef = FirebaseStorage.getInstance().reference
 
@@ -87,7 +86,6 @@ class AddShopActivity : AppCompatActivity(), OnMarkerDragListener {
         }
 
         btnAddShop.setOnClickListener {
-
             val name = etShopName.text.toString().trim()
             val description = etShopDescription.text.toString().trim()
             var isNotValid = false
@@ -137,28 +135,11 @@ class AddShopActivity : AppCompatActivity(), OnMarkerDragListener {
         }
     }
 
+    // opens gallery of application
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
-
-//    private fun openCamera() {
-//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        startActivityForResult(intent, CAMERA_REQUEST)
-//    }
-
-    // degraded quality
-//    private fun saveBitmapToFile(bitmap: Bitmap): Uri {
-//        val fileName = "${UUID.randomUUID()}.jpg" // Generate a unique file name
-//        val file = File(filesDir, fileName) // Replace "image.jpg" with a desired file name
-//        file.createNewFile()
-//
-//        val outputStream = FileOutputStream(file)
-//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-//        outputStream.close()
-//
-//        return Uri.fromFile(file)
-//    }
 
     private fun saveImageToFile(imageUri: Uri): Uri {
         val fileName = "${UUID.randomUUID()}.jpg" // Generate a unique file name
@@ -188,56 +169,6 @@ class AddShopActivity : AppCompatActivity(), OnMarkerDragListener {
                             .into(imageShop)
                     }
                 }
-//                CAMERA_REQUEST -> {
-//                    val photo: Bitmap? = data?.extras?.get("data") as? Bitmap
-////                    val photo: Uri? = data?.data
-//                    Log.d("TestingPhoto", "$photo")
-//                    if (photo != null) {
-//                        // Save the bitmap to a file and retrieve its URI or file path
-//                        val imageFileUri = saveBitmapToFile(photo)
-////                        val imageFileUri = saveImageToFile(photo)
-//                        val imageFileString = imageFileUri.lastPathSegment
-////                        Log.d("Testing Image Upload by camera", "${imageFileString}")
-//
-//                        // Load the image into the ImageView using Glide or Picasso
-//                        Glide.with(this)
-//                            .load(imageFileUri)
-//                            .transform(CenterCrop(), RoundedCorners(10))
-//                            .into(imageShop)
-//
-//                        // Perform further processing or upload the image as needed
-//                        val imageRef = storageRef.child("images/$imageFileString")
-//
-//                        val uploadTask = imageRef.putFile(imageFileUri)
-//
-//                        // Listen for the upload progress and completion
-//                        uploadTask.addOnProgressListener { taskSnapshot ->
-//                            val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount)
-//                            // Update UI to show the upload progress
-////                             progressBar.progress = progress.toInt()
-//                        }.addOnCompleteListener { task ->
-//                            if (task.isSuccessful) {
-//                                // Image upload is successful
-//                                // You can retrieve the download URL of the uploaded image
-//                                imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-//                                    // Perform further processing or store the download URL
-//                                    val imageUrl = downloadUri.toString()
-////                                    Log.d("Testing", "$imageUrl")
-//                                    // Do whatever you need with the image URL
-//                                    // e.g., save it to your database
-//                                }.addOnFailureListener { exception ->
-//                                    // Handle any errors that occurred during download URL retrieval
-//                                    Log.e("Testing", "Failed to retrieve download URL: ${exception.message}")
-//                                }
-//                            } else {
-//                                // Image upload failed
-//                                val exception = task.exception
-//                                Log.e("Testing", "Image upload failed: ${exception?.message}")
-//                                // Handle the error
-//                            }
-//                        }
-//                    }
-//                }
             }
         }
     }

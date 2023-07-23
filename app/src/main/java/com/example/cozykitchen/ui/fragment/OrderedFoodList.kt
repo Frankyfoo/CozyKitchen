@@ -64,7 +64,6 @@ class OrderedFoodList : Fragment() {
         orderId = arguments?.getString("OrderId")
         status = arguments?.getString("OrderStatus")
         shopId = arguments?.getString("ShopId")
-//        Toast.makeText(requireContext(), "$shopId", Toast.LENGTH_SHORT).show()
         val deliveryDateTimeString = arguments?.getString("DeliveryDateTimeString")
 
         // convert DeliveryDateTimeString to Date object

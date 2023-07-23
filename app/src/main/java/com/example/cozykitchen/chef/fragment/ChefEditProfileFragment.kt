@@ -45,6 +45,7 @@ class ChefEditProfileFragment : Fragment() {
         session = LoginPreference(requireContext())
         userId = session.getCurrentUserId()
 
+        // get chef information
         KitchenApi.retrofitService.getChefById(userId).enqueue(object: Callback<Chef>{
             override fun onResponse(call: Call<Chef>, response: Response<Chef>) {
                 if (response.isSuccessful) {

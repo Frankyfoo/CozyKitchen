@@ -230,16 +230,14 @@ class ChefOrderedFoodListFragment : Fragment() {
             val btnNavigate = dialogView.findViewById<Button>(R.id.btn_navigate)
 
             btnCall.setOnClickListener {
-                // Perform any desired action when btnCall is clicked
-                // For example, you can initiate a phone call
+                // Initiate a phone call
                 val phoneNumber = user?.userPhoneNumber
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
                 startActivity(intent)
             }
 
             btnNavigate.setOnClickListener {
-                // Perform any desired action when btnNavigate is clicked
-                // For example, you can open a navigation app
+                // Open a navigation app
                 val latitude = address?.latitude
                 val longitude = address?.longitude
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=$latitude,$longitude"))

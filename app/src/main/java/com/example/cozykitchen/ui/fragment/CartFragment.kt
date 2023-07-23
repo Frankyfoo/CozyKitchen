@@ -79,7 +79,6 @@ class CartFragment : Fragment(), OnCartClickListener {
                 ) {
                     shoppingCartList = response.body() as MutableList<ShoppingCart>?
 
-//                    Log.d("CartTesting", shoppingCartList.toString())
                     if (shoppingCartList != null && shoppingCartList!!.isNotEmpty()) {
                         for(shoppingCart in shoppingCartList!!) {
                             shopId = shoppingCart.product?.shopId

@@ -95,9 +95,6 @@ class AddressListFragment : Fragment(), OnAddressClickListener {
             findNavController().navigateUp()
         }
 
-        // Request location permission
-        // ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001)
-
         // FAB for adding new Address
         binding.fabAddAddress.setOnClickListener{
             findNavController().navigate(R.id.action_addressListFragment_to_addressFragment)

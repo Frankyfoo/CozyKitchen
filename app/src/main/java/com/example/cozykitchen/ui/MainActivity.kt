@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = "Shop"
 
         session = LoginPreference(this)
-//        Log.d("MainTesting", "${session.getUserDetails()}")
 
         // start of setting up navigation
         bottomNavigationView = binding.bottomNavBar
@@ -45,28 +44,22 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         setupActionBarWithNavController(navController)
 
-        // do not know what this function for
-//        bottomNavigationView.setupWithNavController(navController)
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_shop -> {
-//                    supportActionBar?.title = "Shop"
                     navController.navigate(R.id.shop_fragment)
                     true
                 }
                 R.id.navigation_cart -> {
-//                    supportActionBar?.title = "Cart"
                     navController.navigate(R.id.cart_fragment)
                     true
                 }
                 R.id.navigation_history -> {
-//                    supportActionBar?.title = "History"
                     navController.navigate(R.id.history_fragment)
                     true
                 }
                 R.id.navigation_profile -> {
-//                    supportActionBar?.title = "Profile"
                     navController.navigate(R.id.profile_fragment)
                     true
                 }

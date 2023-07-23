@@ -79,60 +79,6 @@ class MapFragment : Fragment(), OnMapReadyCallback{
             // Enable the location layer on the map
             googleMap.isMyLocationEnabled = true
 
-            // Get the last known location
-//            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-//            fusedLocationClient.lastLocation
-//                .addOnSuccessListener { location ->
-//                    if (location != null) {
-//                        // Add a marker at the current location
-//                        val currentLatLng = LatLng(location.latitude, location.longitude)
-//                        val physicalLocationString = getPhysicalLocationString(currentLatLng)
-//
-//                        // check if there is Address or not
-//                        if (!physicalLocationString.isNullOrEmpty()) {
-//                            markerDragListener?.onMarkerDragEnd(physicalLocationString, currentLatLng.latitude, currentLatLng.longitude)
-//                        } else {
-//                            Toast.makeText(requireContext(), "No Address Found", Toast.LENGTH_SHORT).show()
-//                        }
-//
-//                        // add market to map
-//                        marker = googleMap.addMarker(
-//                            MarkerOptions()
-//                                .position(currentLatLng)
-//                                .title("Your Current Location")
-//                                .snippet("Hold and Drag to change location")
-//                                .draggable(true)
-//                        )
-//
-//                        // Zoom in to the current location
-//                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18f))
-//
-//                        // Set up the marker drag listener
-//                        googleMap.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener {
-//                            override fun onMarkerDragStart(marker: Marker) {
-//                                // called when marker is held
-//                            }
-//
-//                            override fun onMarkerDrag(marker: Marker) {
-//                                // Called when the marker is being dragged
-//                            }
-//
-//                            override fun onMarkerDragEnd(marker: Marker) {
-//                                // Called when the marker drag ends
-//                                val newPosition = marker.position
-//                                val physicalLocationString = getPhysicalLocationString(newPosition)
-//
-//                                // check if there is Address or not
-//                                if (!physicalLocationString.isNullOrEmpty()) {
-//                                    markerDragListener?.onMarkerDragEnd(physicalLocationString, newPosition.latitude, newPosition.longitude)
-//                                } else {
-//                                    Toast.makeText(requireContext(), "No Address Found", Toast.LENGTH_SHORT).show()
-//                                }
-//                            }
-//                        })
-//                    }
-//                }
-
             if (targetLatLng != null) {
                 // Add a marker at the target location
                 val targetLocation = targetLatLng!!
@@ -251,7 +197,6 @@ class MapFragment : Fragment(), OnMapReadyCallback{
         if (addresses?.isNotEmpty() == true) {
             val address = addresses?.get(0)
             fullAddress = address?.getAddressLine(0)
-//            Toast.makeText(requireContext(), "$fullAddress", Toast.LENGTH_SHORT).show()
         }
 
         return fullAddress

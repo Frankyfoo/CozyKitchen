@@ -63,6 +63,7 @@ class ShopAdapter(private var shops: List<Shop>, private val listener: OnShopCli
         }
     }
 
+    // update shop list based on search query
     fun updateShopList(newShopList: List<Shop>, searchQuery: String) {
         if (searchQuery.isEmpty()) {
             // If search query is empty, display all shops
