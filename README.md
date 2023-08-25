@@ -9,7 +9,7 @@ Backend Development using C# and ASP.NET Framework.
 Data Retrieval methods : self-hosted API and Firebase.
 
 # Splash, Registration and Permission Access
-<img src="https://github.com/Frankyfoo/CozyKitchen/assets/50284573/c291a93c-f9ff-4637-be6b-0a86c155f834" alt="Splash" width="200"/>
+<img src="Screenshots/Splash screen.jpg" alt="Splash" width="200"/>
 <img src="https://github.com/Frankyfoo/CozyKitchen/assets/50284573/a6582dc8-b439-4c08-9673-1c4ca659a89c" alt="Registration" width="200"/>
 <img src="https://github.com/Frankyfoo/CozyKitchen/assets/50284573/759da693-bcae-4eb5-b562-fe7ddc4eb67d" alt="Login" width="200"/>
 <img src="https://github.com/Frankyfoo/CozyKitchen/assets/50284573/ceb25b5a-97b7-49df-bf38-c4df3d57ca73" alt="Permission request" width="200"/>
