@@ -9,11 +9,10 @@ Backend Development using C# and ASP.NET Framework.
 Data Retrieval methods : self-hosted API and Firebase.
 
 # Splash, Registration and Permission Access
-<img src="Screenshots/Splash screen.jpg" alt="Splash" width="200"/>
-<img src="Screenshots/register.jpg" alt="Registration" width="200"/>
-<img src="Screenshots/Login.jpg" alt="Login" width="200"/>
-<img src="Screenshots/Permission request.jpg" alt="Permission request" width="200"/>
-<img src="Screenshots/chef_login.jpg" alt="register" width="200"/>
+| <img src="Screenshots/Splash screen.jpg" alt="Splash" width="200"/> | <img src="Screenshots/register.jpg" alt="Registration" width="200"/> | <img src="Screenshots/chef_login.jpg" alt="register" width="200"/> | <img src="Screenshots/Login.jpg" alt="Login" width="200"/> | <img src="Screenshots/Permission request.jpg" alt="Permission request" width="200"/> |
+|:-----------------------:|:-----------------------:|:-----------------------:|:-----------------------:|:-----------------------:|
+| Splash       | Register           | Chef login           | Login           |     Permission request        |
+
 
 # Customer (User)
 <img src="Screenshots/Shop.jpg" alt="Shop" width="200"/>
